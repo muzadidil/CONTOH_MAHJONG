@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Mahjong Ways - PG Soft (Pocket Games Soft)</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app-backdrop">
+    <!-- PG Soft 9:16 Portrait Game Shell -->
+    <main class="game-shell" id="gameShell">
+
+      <!-- ==========================================
+           1. PG SOFT MAHJONG WAYS 1 SPLASH INTRO
+           ========================================== -->
+      <div class="splash-overlay" id="splashOverlay">
+        <div class="pg-brand-top">
+          <span class="pg-badge">PG</span>
+          <span>POCKET GAMES SOFT</span>
+        </div>
+
+        <div class="splash-hero">
+          <div class="splash-tiles-art">
+            <div class="splash-tile-card t-left">
+              <span style="font-family:'Noto Serif SC',serif;font-size:48px;font-weight:900;color:#0d8a47;">發</span>
+            </div>
+            <div class="splash-tile-card t-center">
+              <span style="font-family:'Noto Serif SC',serif;font-size:54px;font-weight:900;color:#8f0711;">胡</span>
+            </div>
+            <div class="splash-tile-card t-right">
+              <span style="font-family:'Noto Serif SC',serif;font-size:48px;font-weight:900;color:#c91622;">中</span>
+            </div>
+          </div>
+
+          <h1 class="splash-title-cn">麻將胡了</h1>
+          <div class="splash-title-en">MAHJONG WAYS</div>
+
+          <div class="splash-features-card">
+            <div class="splash-feature-row">
+              <div class="splash-feature-badge">百搭</div>
+              <div>
+                <strong style="color:#ffd54f;">Simbol Berlapis Emas</strong><br />
+                Simbol emas di gulungan 2, 3 &amp; 4 berubah menjadi simbol <strong>Wild</strong> saat menang!
+              </div>
+            </div>
+            <div class="splash-feature-row">
+              <div class="splash-feature-badge">x10</div>
+              <div>
+                <strong style="color:#ffd54f;">Pengali Putaran Gratis</strong><br />
+                3 simbol Scatter (胡) memicu <strong>12 Putaran Gratis</strong> dengan pengali <strong>x2, x4, x6, x10</strong>!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="splash-start-btn" id="startGameBtn">MULAI</button>
+      </div>
+
+      <!-- ==========================================
+           2. TOP STATUS & MULTIPLIER HEADER
+           ========================================== -->
+      <div>
+        <div class="top-status-bar">
+          <div class="status-left">
+            <span>📶 5G</span>
+            <span>Mahjong Ways</span>
+          </div>
+          <div class="status-right">
+            <span id="clockText">15:45</span>
+            <span>🔋 98%</span>
+          </div>
+        </div>
+
+        <header class="header-multiplier-zone">
+          <div class="header-ways-row">
+            <div class="brand-mini-title">麻將胡了 • MAHJONG WAYS</div>
+            <div class="demo-quick-actions">
+              <button type="button" class="btn-demo-chip" id="demoScatterBtn" title="Picu 3 Scatter (12 Free Spin)">⚡ DEMO SCATTER</button>
+              <button type="button" class="btn-demo-chip" id="demoBigWinBtn" title="Picu Kombo Naga + Emas">🪙 DEMO MAXWIN</button>
+            </div>
+            <div class="ways-pill">1024 WAYS</div>
+          </div>
+
+          <div class="multiplier-track" id="multiplierTrack">
+            <div class="mult-step active">x1</div>
+            <div class="mult-step">x2</div>
+            <div class="mult-step">x3</div>
+            <div class="mult-step">x5</div>
+          </div>
+        </header>
+
+        <!-- Free Spins Counter Bar (Visible in Free Spins Mode) -->
+        <div class="freespin-status-banner" id="freespinBanner">
+          <span>🔥 MODE PUTARAN GRATIS (REEL 3 EMAS PENUH)</span>
+          <span>SISA: <span class="fs-count-badge" id="fsCountBadge">12</span></span>
+        </div>
+
+        <!-- Marquee / Win Display Bar -->
+        <div class="marquee-banner" id="marqueeBanner">
+          <div class="marquee-text" id="marqueeText">Menangkan hingga 25.000x lipat taruhan!</div>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           3. 5x4 MAHJONG REEL GRID STAGE
+           ========================================== -->
+      <section class="reel-stage-wrapper">
+        <div class="reel-board-frame" id="reelBoard">
+          <div class="reel-column" data-col="0"></div>
+          <div class="reel-column gold-zone" data-col="1"></div>
+          <div class="reel-column gold-zone" data-col="2"></div>
+          <div class="reel-column gold-zone" data-col="3"></div>
+          <div class="reel-column" data-col="4"></div>
+        </div>
+
+        <!-- Floating Combo Win Popup -->
+        <div class="board-win-float" id="boardWinFloat">
+          <div class="float-label" id="floatWinLabel">KOMBO x2</div>
+          <div class="float-amount" id="floatWinAmount">Rp 25.000</div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           4. PG SOFT BOTTOM CONTROL DASHBOARD
+           ========================================== -->
+      <footer class="control-dashboard">
+        <div class="wallet-info-strip">
+          <div class="info-meter">
+            <div class="meter-label"><i>👛</i> SALDO KAS</div>
+            <div class="meter-value" id="balanceVal">Rp 1.000.000</div>
+          </div>
+          <div class="info-meter">
+            <div class="meter-label"><i>🪙</i> TARUHAN</div>
+            <div class="meter-value" id="betVal">Rp 2.000</div>
+          </div>
+          <div class="info-meter win-meter">
+            <div class="meter-label"><i>🏆</i> MENANG</div>
+            <div class="meter-value" id="winVal">Rp 0</div>
+          </div>
+        </div>
+
+        <div class="action-buttons-row">
+          <button type="button" class="ctrl-btn" id="turboBtn" title="Mode Turbo">
+            <span>⚡</span>
+            <span class="btn-subtext">TURBO</span>
+          </button>
+
+          <button type="button" class="ctrl-btn" id="betMinusBtn" title="Kurangi Taruhan">
+            <span style="font-size:22px;line-height:1;">−</span>
+          </button>
+
+          <button type="button" class="spin-btn-main" id="spinBtn" title="Putar (Spasi)">
+            <svg class="spin-arrows-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M32 10C19.85 10 10 19.85 10 32" stroke="#fff9c4" stroke-width="5.5" stroke-linecap="round"/>
+              <polygon points="32,3 44,11 32,19" fill="#fff9c4"/>
+              <path d="M32 54C44.15 54 54 44.15 54 32" stroke="#fff9c4" stroke-width="5.5" stroke-linecap="round"/>
+              <polygon points="32,61 20,53 32,45" fill="#fff9c4"/>
+              <circle cx="32" cy="32" r="6" fill="#ffd54f"/>
+            </svg>
+            <div class="auto-counter-badge" id="autoBadge">25</div>
+          </button>
+
+          <button type="button" class="ctrl-btn" id="betPlusBtn" title="Tambah Taruhan">
+            <span style="font-size:22px;line-height:1;">+</span>
+          </button>
+
+          <button type="button" class="ctrl-btn" id="autoBtn" title="Putar Otomatis">
+            <span>🔄</span>
+            <span class="btn-subtext">AUTO</span>
+          </button>
+        </div>
+
+        <div class="bottom-utility-bar">
+          <button type="button" class="util-btn" id="soundToggleBtn">🔊 Suara: ON</button>
+          <span>PG SOFT • MAHJONG WAYS V1.0</span>
+          <button type="button" class="util-btn" id="paytableBtn">📜 Tabel Pembayaran</button>
+        </div>
+      </footer>
+
+      <!-- ==========================================
+           5. BIG WIN & FREE SPINS CELEBRATION MODAL
+           ========================================== -->
+      <div class="celebration-modal" id="celebModal">
+        <canvas id="coinCanvas"></canvas>
+        <div class="celebration-content">
+          <div class="win-tier-badge" id="celebTitle">MENANG BESAR!</div>
+          <div class="win-tier-sub" id="celebSub">BIG WIN</div>
+          <div class="celebration-amount-box" id="celebAmount">Rp 120.000</div>
+          <div class="celebration-skip-hint">Ketuk layar untuk melanjutkan</div>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           6. PAYTABLE (TABEL PEMBAYARAN) DRAWER
+           ========================================== -->
+      <div class="sheet-modal" id="paytableModal">
+        <div class="sheet-box">
+          <div class="sheet-header">
+            <div class="sheet-title">📜 Tabel Pembayaran — Mahjong Ways 1</div>
+            <button type="button" class="sheet-close" id="closePaytableBtn">✕</button>
+          </div>
+          <p style="font-size:12px;color:#b2dfdb;margin-bottom:10px;line-height:1.45;">
+            • <strong>Simbol Berlapis Emas</strong> muncul di gulungan 2, 3, dan 4. Jika terlibat dalam kemenangan, simbol tersebut akan berubah menjadi <strong>Wild (Ingot Emas)</strong> pada runtuhan berikutnya.<br />
+            • <strong>Pengali Runtuhan</strong>: Setiap runtuhan kemenangan berturut-turut meningkatkan pengali dari <strong>x1 → x2 → x3 → x5</strong> (dan <strong>x2 → x4 → x6 → x10</strong> saat Putaran Gratis).
+          </p>
+          <div class="paytable-grid" id="paytableGrid"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="js/audio.js"></script>
+  <script src="js/tiles.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
