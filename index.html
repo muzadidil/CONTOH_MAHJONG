@@ -2,8 +2,16 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Mahjong Ways - PG Soft (Pocket Games Soft)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#1a0b07" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Mahjong Ways" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/sprites/pwa_icon_192.png" />
+  <link rel="apple-touch-icon" href="assets/sprites/pwa_icon_192.png" />
+  <title>Mahjong Ways</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -12,199 +20,338 @@
     <main class="game-shell" id="gameShell">
 
       <!-- ==========================================
-           1. PG SOFT MAHJONG WAYS 1 SPLASH INTRO
+           1. OFFICIAL PG SOFT SPLASH & LOADING SCREEN
+           Matches screen_6s.png & game_25s.png 1:1
            ========================================== -->
       <div class="splash-overlay" id="splashOverlay">
-        <div class="pg-brand-top">
-          <span class="pg-badge">PG</span>
-          <span>POCKET GAMES SOFT</span>
+        <div class="splash-center-cta">
+          <!-- Loading Progress Bar State -->
+          <div class="pg-load-area" id="pgLoadArea">
+            <div class="pg-progress-track">
+              <div class="pg-progress-fill" id="bootBar"></div>
+            </div>
+            <div class="pg-load-status" id="bootText">Inisialisasi [20%]</div>
+            <div class="pg-load-tip">Perbarui perangkat Anda ke versi terakhir untuk pengalaman bermain terbaik!</div>
+          </div>
+
+          <!-- Glossy Red MULAI Button (appears when 100% loaded) -->
+          <button type="button" class="pg-mulai-btn hidden" id="startGameBtn">MULAI</button>
         </div>
 
-        <div class="splash-hero">
-          <div class="splash-tiles-art">
-            <div class="splash-tile-card t-left">
-              <span style="font-family:'Noto Serif SC',serif;font-size:48px;font-weight:900;color:#0d8a47;">發</span>
+        <!-- Official PG Soft / MGA / BMM Footer -->
+        <div class="splash-footer">
+          <div class="splash-cert-row">
+            <div class="pg-pixel-logo">
+              <div class="pg-pixel-text">PG</div>
+              <div class="pg-pixel-sub">POCKET GAMES SOFT<sup>®</sup></div>
             </div>
-            <div class="splash-tile-card t-center">
-              <span style="font-family:'Noto Serif SC',serif;font-size:54px;font-weight:900;color:#8f0711;">胡</span>
-            </div>
-            <div class="splash-tile-card t-right">
-              <span style="font-family:'Noto Serif SC',serif;font-size:48px;font-weight:900;color:#c91622;">中</span>
-            </div>
+            <img class="splash-cert-img" src="assets/pg_native/images/atlas_0_732x108.png" alt="MGA BMM" draggable="false" />
           </div>
-
-          <h1 class="splash-title-cn">麻將胡了</h1>
-          <div class="splash-title-en">MAHJONG WAYS</div>
-
-          <div class="splash-features-card">
-            <div class="splash-feature-row">
-              <div class="splash-feature-badge">百搭</div>
-              <div>
-                <strong style="color:#ffd54f;">Simbol Berlapis Emas</strong><br />
-                Simbol emas di gulungan 2, 3 &amp; 4 berubah menjadi simbol <strong>Wild</strong> saat menang!
-              </div>
-            </div>
-            <div class="splash-feature-row">
-              <div class="splash-feature-badge">x10</div>
-              <div>
-                <strong style="color:#ffd54f;">Pengali Putaran Gratis</strong><br />
-                3 simbol Scatter (胡) memicu <strong>12 Putaran Gratis</strong> dengan pengali <strong>x2, x4, x6, x10</strong>!
-              </div>
-            </div>
+          <div class="splash-copyright">
+            PGSOFT.COM 2026 © PG SOFT<sup>®</sup> HAK CIPTA DILINDUNGI UNDANG-UNDANG
           </div>
-        </div>
-
-        <button type="button" class="splash-start-btn" id="startGameBtn">MULAI</button>
-      </div>
-
-      <!-- ==========================================
-           2. TOP STATUS & MULTIPLIER HEADER
-           ========================================== -->
-      <div>
-        <div class="top-status-bar">
-          <div class="status-left">
-            <span>📶 5G</span>
-            <span>Mahjong Ways</span>
-          </div>
-          <div class="status-right">
-            <span id="clockText">15:45</span>
-            <span>🔋 98%</span>
-          </div>
-        </div>
-
-        <header class="header-multiplier-zone">
-          <div class="header-ways-row">
-            <div class="brand-mini-title">麻將胡了 • MAHJONG WAYS</div>
-            <div class="demo-quick-actions">
-              <button type="button" class="btn-demo-chip" id="demoScatterBtn" title="Picu 3 Scatter (12 Free Spin)">⚡ DEMO SCATTER</button>
-              <button type="button" class="btn-demo-chip" id="demoBigWinBtn" title="Picu Kombo Naga + Emas">🪙 DEMO MAXWIN</button>
-            </div>
-            <div class="ways-pill">1024 WAYS</div>
-          </div>
-
-          <div class="multiplier-track" id="multiplierTrack">
-            <div class="mult-step active">x1</div>
-            <div class="mult-step">x2</div>
-            <div class="mult-step">x3</div>
-            <div class="mult-step">x5</div>
-          </div>
-        </header>
-
-        <!-- Free Spins Counter Bar (Visible in Free Spins Mode) -->
-        <div class="freespin-status-banner" id="freespinBanner">
-          <span>🔥 MODE PUTARAN GRATIS (REEL 3 EMAS PENUH)</span>
-          <span>SISA: <span class="fs-count-badge" id="fsCountBadge">12</span></span>
-        </div>
-
-        <!-- Marquee / Win Display Bar -->
-        <div class="marquee-banner" id="marqueeBanner">
-          <div class="marquee-text" id="marqueeText">Menangkan hingga 25.000x lipat taruhan!</div>
         </div>
       </div>
 
       <!-- ==========================================
-           3. 5x4 MAHJONG REEL GRID STAGE
+           2. OFFICIAL PG SOFT TOP WOODEN HEADER
+           Matches after_mulai_1.png 1:1
            ========================================== -->
-      <section class="reel-stage-wrapper">
+      <header class="pg-top-header" id="topHeader">
+        <!-- Layer 1: Wooden table background with Chinese coins -->
+        <img class="hdr-bg-wood" src="assets/sprites/main_top_a.png" alt="" draggable="false" />
+
+        <!-- Layer 2: Curved terracotta 1024 CARA top bar -->
+        <div class="hdr-ways-bar">
+          <img class="ways-bar-bg" src="assets/sprites/main_top_b.png" alt="" draggable="false" />
+          <img class="ways-bar-text" src="assets/sprites/1024ways.png" alt="1024 CARA" draggable="false" />
+        </div>
+
+        <!-- Layer 3: Multiplier Wooden Bar (Normal) / Red Bar (Free Spins) -->
+        <div class="hdr-mult-bar">
+          <img class="mult-bar-bg normal-bg" src="assets/sprites/main_top_c.png" alt="" draggable="false" />
+          <img class="mult-bar-bg bonus-bg" src="assets/sprites/bonus_top_b.png" alt="" draggable="false" />
+
+          <div class="mult-slots" id="multiplierTrack">
+            <div class="mult-slot active" data-idx="0">
+              <img class="mult-img-inactive" src="assets/sprites/mul_inactive_x1.png" alt="x1" draggable="false" />
+              <img class="mult-img-active" src="assets/sprites/mul_active_x1.png" alt="x1" draggable="false" />
+            </div>
+            <div class="mult-slot" data-idx="1">
+              <img class="mult-img-inactive" src="assets/sprites/mul_inactive_x2.png" alt="x2" draggable="false" />
+              <img class="mult-img-active" src="assets/sprites/mul_active_x2.png" alt="x2" draggable="false" />
+            </div>
+            <div class="mult-slot" data-idx="2">
+              <img class="mult-img-inactive" src="assets/sprites/mul_inactive_x3.png" alt="x3" draggable="false" />
+              <img class="mult-img-active" src="assets/sprites/mul_active_x3.png" alt="x3" draggable="false" />
+            </div>
+            <div class="mult-slot" data-idx="3">
+              <img class="mult-img-inactive" src="assets/sprites/mul_inactive_x5.png" alt="x5" draggable="false" />
+              <img class="mult-img-active" src="assets/sprites/mul_active_x5.png" alt="x5" draggable="false" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Top-Right Golden Trophy / Demo Trigger Button (Matches after_mulai_1.png) -->
+        <button type="button" class="hdr-trophy-btn" id="demoMenuBtn" title="Menu Fitur Demo (Scatter / Big Win)">
+          <span class="trophy-icon">🏆</span>
+          <span class="trophy-dot"></span>
+        </button>
+
+        <!-- Quick Demo Popup Menu when clicking Trophy -->
+        <div class="demo-popup-menu hidden" id="demoPopupMenu">
+          <button type="button" class="demo-popup-item" id="demoScatterBtn">🀄 Picu 3 Scatter (Putaran Gratis)</button>
+          <button type="button" class="demo-popup-item" id="demoBigWinBtn">🐉 Picu Kombo Emas &amp; Menang Besar</button>
+        </div>
+      </header>
+
+      <!-- ==========================================
+           3. OFFICIAL PG SOFT 5-REEL GREEN FELT BOARD
+           Matches after_mulai_1.png 1:1
+           ========================================== -->
+      <section class="reel-stage-wrapper" id="reelStage">
         <div class="reel-board-frame" id="reelBoard">
-          <div class="reel-column" data-col="0"></div>
-          <div class="reel-column gold-zone" data-col="1"></div>
-          <div class="reel-column gold-zone" data-col="2"></div>
-          <div class="reel-column gold-zone" data-col="3"></div>
-          <div class="reel-column" data-col="4"></div>
+          <div class="reel-column col-outer" data-col="0"></div>
+          <div class="reel-column col-inner" data-col="1"></div>
+          <div class="reel-column col-center" data-col="2"></div>
+          <div class="reel-column col-inner" data-col="3"></div>
+          <div class="reel-column col-outer" data-col="4"></div>
         </div>
 
-        <!-- Floating Combo Win Popup -->
-        <div class="board-win-float" id="boardWinFloat">
-          <div class="float-label" id="floatWinLabel">KOMBO x2</div>
-          <div class="float-amount" id="floatWinAmount">Rp 25.000</div>
+        <!-- Particle & Shimmer Canvas Overlay -->
+        <canvas id="fxCanvas" class="fx-canvas-overlay"></canvas>
+
+        <!-- Single Tile Payout Popup Window (Matches payout_window in 043a152fa.5d7f8.json) -->
+        <div class="tile-payout-popup hidden" id="tilePayoutPopup">
+          <div class="tpp-card" id="tilePayoutCard"></div>
         </div>
       </section>
 
       <!-- ==========================================
-           4. PG SOFT BOTTOM CONTROL DASHBOARD
+           4. OFFICIAL PG SOFT WOODEN BOTTOM DASHBOARD
+           Matches after_mulai_1.png 1:1
            ========================================== -->
-      <footer class="control-dashboard">
-        <div class="wallet-info-strip">
-          <div class="info-meter">
-            <div class="meter-label"><i>👛</i> SALDO KAS</div>
-            <div class="meter-value" id="balanceVal">Rp 1.000.000</div>
-          </div>
-          <div class="info-meter">
-            <div class="meter-label"><i>🪙</i> TARUHAN</div>
-            <div class="meter-value" id="betVal">Rp 2.000</div>
-          </div>
-          <div class="info-meter win-meter">
-            <div class="meter-label"><i>🏆</i> MENANG</div>
-            <div class="meter-value" id="winVal">Rp 0</div>
+      <footer class="pg-bottom-dashboard" id="bottomDashboard">
+        <!-- Layer 1: Wooden table with scattered Chinese brass coins (Normal) / Red wave (Free Spins) -->
+        <img class="btm-bg-wood normal-btm-bg" src="assets/sprites/main_bottom_a.png" alt="" draggable="false" />
+        <img class="btm-bg-wood bonus-btm-bg" src="assets/sprites/bonus_bottom_a.png" alt="" draggable="false" />
+
+        <!-- Layer 2: Top curved terracotta rim below the reels -->
+        <img class="btm-top-rim" src="assets/sprites/main_bottom_b.png" alt="" draggable="false" />
+
+        <!-- Layer 3: Ornate Red & Gold Chinese Knot Marquee Banner -->
+        <div class="pg-infoboard-wrap" id="marqueeBanner">
+          <img class="infoboard-frame" id="infoboardFrame" src="assets/sprites/infoboard_b.png" alt="" draggable="false" />
+          <div class="infoboard-Viewport">
+            <!-- Sprite tip image or dynamic win text -->
+            <div class="infoboard-sprite-ticker" id="marqueeSpriteWrap">
+              <img id="marqueeSpriteImg" src="assets/sprites/info0.png" alt="Menangkan hingga pengali x10" draggable="false" />
+            </div>
+            <div class="infoboard-win-display hidden" id="marqueeWinWrap">
+              <img class="win-badge-img" id="marqueeWinLabel" src="assets/sprites/win_info.png" alt="MENANG" draggable="false" />
+              <span class="infoboard-win-amount" id="marqueeWinAmount">Rp0,00</span>
+            </div>
           </div>
         </div>
 
-        <div class="action-buttons-row">
-          <button type="button" class="ctrl-btn" id="turboBtn" title="Mode Turbo">
-            <span>⚡</span>
-            <span class="btn-subtext">TURBO</span>
-          </button>
+        <!-- Free Spins Remaining Counter Overlay (Active during Free Spins) -->
+        <div class="freespin-counter-bar hidden" id="freespinBanner">
+          <span class="fs-label-text">PUTARAN GRATIS TERSISA</span>
+          <span class="fs-remaining-num" id="fsCountBadge">12</span>
+        </div>
 
-          <button type="button" class="ctrl-btn" id="betMinusBtn" title="Kurangi Taruhan">
-            <span style="font-size:22px;line-height:1;">−</span>
-          </button>
-
-          <button type="button" class="spin-btn-main" id="spinBtn" title="Putar (Spasi)">
-            <svg class="spin-arrows-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M32 10C19.85 10 10 19.85 10 32" stroke="#fff9c4" stroke-width="5.5" stroke-linecap="round"/>
-              <polygon points="32,3 44,11 32,19" fill="#fff9c4"/>
-              <path d="M32 54C44.15 54 54 44.15 54 32" stroke="#fff9c4" stroke-width="5.5" stroke-linecap="round"/>
-              <polygon points="32,61 20,53 32,45" fill="#fff9c4"/>
-              <circle cx="32" cy="32" r="6" fill="#ffd54f"/>
+        <!-- Layer 4: 3 Rounded Dark Pill Meters (Wallet | PG Shield / Win | Bet) -->
+        <div class="pg-Wallet-pills-row">
+          <!-- Left Pill: User/Wallet Balance -->
+          <div class="pg-pill-meter pill-left" id="walletMeterBtn" title="Klik untuk Isi Ulang Saldo">
+            <svg class="pill-icon-left" viewBox="0 0 36 36" fill="none">
+              <circle cx="15" cy="18" r="11" stroke="#ffffff" stroke-width="2.2"/>
+              <circle cx="15" cy="14.5" r="3.5" stroke="#ffffff" stroke-width="2"/>
+              <path d="M9.5 24.5C10.8 21.5 13 20.5 15 20.5C17 20.5 19.2 21.5 20.5 24.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+              <line x1="23" y1="8" x2="32" y2="8" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/>
+              <line x1="25" y1="12" x2="32" y2="12" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/>
+              <line x1="27" y1="16" x2="32" y2="16" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/>
             </svg>
-            <div class="auto-counter-badge" id="autoBadge">25</div>
+            <span class="pill-value-text" id="balanceVal">Rp1.000.000,00</span>
+          </div>
+
+          <!-- Center Pill: PG Shield / Last Win -->
+          <div class="pg-pill-meter pill-center" id="winMeterBtn" title="Riwayat &amp; Kemenangan">
+            <img class="pg-shield-icon" id="pgShieldIcon" src="assets/sprites/shield_pg.png" alt="PG" draggable="false" />
+            <div class="pill-win-box hidden" id="pillWinBox">
+              <img class="pill-win-tag" src="assets/sprites/win_icon.png" alt="WIN" draggable="false" />
+              <span class="pill-win-val" id="winVal">Rp0,00</span>
+            </div>
+          </div>
+
+          <!-- Right Pill: Total Bet & Bet Options Icon -->
+          <div class="pg-pill-meter pill-right" id="betMeterBtn" title="Pengaturan Taruhan">
+            <span class="pill-value-text" id="betVal">Rp2.000,00</span>
+            <img class="pill-icon-right" src="assets/sprites/bet_options.png" alt="$" draggable="false" />
+          </div>
+        </div>
+
+        <!-- Layer 5: 5 Iconic PG Soft Round Control Buttons -->
+        <div class="pg-controls-row" id="controlsRow">
+          <!-- 1. Turbo Button -->
+          <button type="button" class="pg-round-btn" id="turboBtn" title="Spin Turbo">
+            <img class="btn-icon-sprite" id="turboIconImg" src="assets/sprites/turbo_off.png" alt="Turbo" draggable="false" />
           </button>
 
-          <button type="button" class="ctrl-btn" id="betPlusBtn" title="Tambah Taruhan">
-            <span style="font-size:22px;line-height:1;">+</span>
+          <!-- 2. Minus Bet Button -->
+          <button type="button" class="pg-round-btn" id="betMinusBtn" title="Kurangi Taruhan">
+            <img class="btn-icon-sprite icon-minus" src="assets/sprites/button_minus.png" alt="-" draggable="false" />
           </button>
 
-          <button type="button" class="ctrl-btn" id="autoBtn" title="Putar Otomatis">
-            <span>🔄</span>
-            <span class="btn-subtext">AUTO</span>
+          <!-- 3. Center Jade Green Spin Button -->
+          <button type="button" class="pg-jade-spin-btn" id="spinBtn" title="Putar (Spasi)">
+            <img class="spin-base-img" id="spinBaseImg" src="assets/sprites/spin_base.png" alt="Spin" draggable="false" />
+            <img class="spin-arrow-img" id="spinArrowImg" src="assets/sprites/spin_arrow.png" alt="" draggable="false" />
+            <div class="auto-counter-badge" id="autoBadge">10</div>
+          </button>
+
+          <!-- 4. Plus Bet Button -->
+          <button type="button" class="pg-round-btn" id="betPlusBtn" title="Tambah Taruhan">
+            <img class="btn-icon-sprite icon-plus" src="assets/sprites/button_plus.png" alt="+" draggable="false" />
+          </button>
+
+          <!-- 5. Auto Spin Button (+ Hamburger Menu Trigger on long-press or sub-menu) -->
+          <button type="button" class="pg-round-btn" id="autoBtn" title="Putar Otomatis">
+            <div class="auto-icon-composite">
+              <img class="auto-circle-img" src="assets/sprites/autospin_circle_white.png" alt="" draggable="false" />
+              <img class="auto-play-img" src="assets/sprites/autospin_arrow_white.png" alt="Auto" draggable="false" />
+            </div>
           </button>
         </div>
 
-        <div class="bottom-utility-bar">
-          <button type="button" class="util-btn" id="soundToggleBtn">🔊 Suara: ON</button>
-          <span>PG SOFT • MAHJONG WAYS V1.0</span>
-          <button type="button" class="util-btn" id="paytableBtn">📜 Tabel Pembayaran</button>
+        <!-- Subtle PG Soft Bottom Menu Bar (Sound, Paytable, History, Install App) -->
+        <div class="pg-mini-menu-row">
+          <button type="button" class="mini-menu-btn" id="soundToggleBtn">🔊 Suara: ON</button>
+          <button type="button" class="mini-menu-btn" id="paytableBtn">📜 Tabel Pembayaran</button>
+          <button type="button" class="mini-menu-btn" id="historyBtn">🕒 Riwayat</button>
+          <button type="button" class="mini-menu-btn install-app-btn" id="installPwaBtn">📲 Install Aplikasi</button>
         </div>
       </footer>
 
       <!-- ==========================================
-           5. BIG WIN & FREE SPINS CELEBRATION MODAL
+           5. OFFICIAL PG SOFT BIG WIN / FREE SPIN / TOTAL WIN MODAL
+           Uses atlas_13_756x1051.png, title_bw/mw/smw, freespin_won, bonus_button
            ========================================== -->
       <div class="celebration-modal" id="celebModal">
         <canvas id="coinCanvas"></canvas>
+        <div class="celebration-rays"></div>
+
+        <!-- Official PG Soft Pile of Gold Coins & Mahjong Tiles Backdrop -->
+        <img class="celeb-pile-bg" src="assets/pg_native/images/atlas_13_756x1051.png" alt="" draggable="false" />
+
         <div class="celebration-content">
-          <div class="win-tier-badge" id="celebTitle">MENANG BESAR!</div>
-          <div class="win-tier-sub" id="celebSub">BIG WIN</div>
-          <div class="celebration-amount-box" id="celebAmount">Rp 120.000</div>
-          <div class="celebration-skip-hint">Ketuk layar untuk melanjutkan</div>
+          <!-- Sprite Title (MENANG BESAR / LUAR BIASA / PUTARAN GRATIS) -->
+          <img class="celeb-title-sprite" id="celebTitleSprite" src="assets/sprites/title_bw.png" alt="MENANG BESAR" draggable="false" />
+
+          <!-- Free Spins Count Display (Visible when Free Spins Triggered) -->
+          <div class="celeb-fs-count hidden" id="celebFsCount">12</div>
+          <img class="celeb-fs-sub hidden" id="celebFsSub" src="assets/sprites/feature_loading.png" alt="SEMUA PENGALI DIGANDAKAN!" draggable="false" />
+
+          <!-- Gold Rim Amount Box (Visible during Big Win / Total Win) -->
+          <div class="celebration-amount-box" id="celebAmount">Rp0,00</div>
+
+          <!-- Official Red & Gold Ornate Button (MULAI / KUMPULKAN) -->
+          <button type="button" class="celeb-ornate-btn hidden" id="celebActionBtn">
+            <img class="ornate-btn-bg" src="assets/sprites/bonus_button.png" alt="" draggable="false" />
+            <img class="ornate-btn-txt" id="celebBtnTxtSprite" src="assets/sprites/btn_start_text.png" alt="MULAI" draggable="false" />
+          </button>
         </div>
       </div>
 
       <!-- ==========================================
-           6. PAYTABLE (TABEL PEMBAYARAN) DRAWER
+           6. PG SOFT BET OPTIONS DRAWER
+           ========================================== -->
+      <div class="sheet-modal" id="betSheetModal">
+        <div class="sheet-box">
+          <div class="sheet-header">
+            <div class="sheet-title">Pengaturan Taruhan</div>
+            <button type="button" class="sheet-close" id="closeBetSheetBtn">✕</button>
+          </div>
+          <p class="sheet-desc">Pilih jumlah taruhan per putaran (20 Taruhan Dasar • 1.024 Cara):</p>
+          <div class="bet-options-grid" id="betOptionsGrid"></div>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           7. PG SOFT AUTO SPIN DRAWER
+           ========================================== -->
+      <div class="sheet-modal" id="autoSheetModal">
+        <div class="sheet-box">
+          <div class="sheet-header">
+            <div class="sheet-title">Putar Otomatis</div>
+            <button type="button" class="sheet-close" id="closeAutoSheetBtn">✕</button>
+          </div>
+          <p class="sheet-desc">Jumlah Putaran Otomatis:</p>
+          <div class="auto-options-grid">
+            <button type="button" class="auto-opt-btn" data-spins="10">10</button>
+            <button type="button" class="auto-opt-btn" data-spins="30">30</button>
+            <button type="button" class="auto-opt-btn" data-spins="50">50</button>
+            <button type="button" class="auto-opt-btn" data-spins="80">80</button>
+            <button type="button" class="auto-opt-btn" data-spins="100">100</button>
+            <button type="button" class="auto-opt-btn" data-spins="999">∞</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           8. PG SOFT SPIN HISTORY DRAWER
+           ========================================== -->
+      <div class="sheet-modal" id="historyModal">
+        <div class="sheet-box">
+          <div class="sheet-header">
+            <div class="sheet-title">Riwayat Permainan</div>
+            <button type="button" class="sheet-close" id="closeHistoryBtn">✕</button>
+          </div>
+          <div class="history-list" id="historyList"></div>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           9. PAYTABLE (TABEL PEMBAYARAN) DRAWER
            ========================================== -->
       <div class="sheet-modal" id="paytableModal">
         <div class="sheet-box">
           <div class="sheet-header">
-            <div class="sheet-title">📜 Tabel Pembayaran — Mahjong Ways 1</div>
+            <div class="sheet-title">Tabel Pembayaran — Mahjong Ways</div>
             <button type="button" class="sheet-close" id="closePaytableBtn">✕</button>
           </div>
-          <p style="font-size:12px;color:#b2dfdb;margin-bottom:10px;line-height:1.45;">
-            • <strong>Simbol Berlapis Emas</strong> muncul di gulungan 2, 3, dan 4. Jika terlibat dalam kemenangan, simbol tersebut akan berubah menjadi <strong>Wild (Ingot Emas)</strong> pada runtuhan berikutnya.<br />
-            • <strong>Pengali Runtuhan</strong>: Setiap runtuhan kemenangan berturut-turut meningkatkan pengali dari <strong>x1 → x2 → x3 → x5</strong> (dan <strong>x2 → x4 → x6 → x10</strong> saat Putaran Gratis).
+          <p class="sheet-desc">
+            • <strong>Simbol Berlapis Emas</strong>: Pada gulungan 2, 3, dan 4, simbol berlapis emas yang terlibat dalam kemenangan akan berubah menjadi <strong>Simbol Wild (Ingot Emas)</strong>.<br />
+            • <strong>Pengali Kemenangan</strong>: Setiap runtuhan meningkatkan pengali dari <strong>x1 → x2 → x3 → x5</strong> (dan <strong>x2 → x4 → x6 → x10</strong> dalam Putaran Gratis).
           </p>
           <div class="paytable-grid" id="paytableGrid"></div>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           10. INSTALL PWA / APK GUIDE MODAL
+           ========================================== -->
+      <div class="sheet-modal" id="installGuideModal">
+        <div class="sheet-box">
+          <div class="sheet-header">
+            <div class="sheet-title">📲 Install Aplikasi Mahjong Ways</div>
+            <button type="button" class="sheet-close" id="closeInstallGuideBtn">✕</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;background:rgba(0,0,0,0.35);padding:10px;border-radius:10px;border:1px solid rgba(255,213,79,0.3);">
+            <img src="assets/sprites/pwa_icon_192.png" alt="Icon" style="width:54px;height:54px;border-radius:12px;border:1.5px solid #ffd54f;" />
+            <div>
+              <div style="font-size:14px;font-weight:800;color:#ffe082;">PG Soft — Mahjong Ways</div>
+              <div style="font-size:11px;color:#d6a97a;">Aplikasi Layar Penuh (PWA / Offline Ready)</div>
+            </div>
+          </div>
+          <p class="sheet-desc" style="line-height:1.55;font-size:12px;">
+            <strong>1. Install Langsung di Android (Chrome):</strong><br />
+            • Klik menu titik tiga <strong>(⋮)</strong> di pojok kanan atas Chrome, lalu pilih <strong>"Tambahkan ke Layar Utama" (Add to Home Screen / Install App)</strong>.<br /><br />
+            <strong>2. Install di PC / Laptop (Chrome / Edge):</strong><br />
+            • Klik ikon <strong>Install (+) / Komputer</strong> di sebelah kanan kolom URL address bar atas.<br /><br />
+            <strong>3. Buka dari HP dalam Satu Wi-Fi:</strong><br />
+            • Pastikan HP dan Laptop terhubung ke Wi-Fi/Hotspot yang sama, lalu buka alamat IP lokal komputer Anda di Chrome HP.
+          </p>
         </div>
       </div>
 

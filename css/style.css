@@ -1,18 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Noto+Serif+SC:wght@700;900&family=Nunito:wght@600;700;800;900&display=swap');
-
-:root {
-  --gold-light: #fff3a1;
-  --gold-mid: #f7c548;
-  --gold-dark: #b37400;
-  --red-imperial: #9e0b16;
-  --red-bright: #e01b24;
-  --red-deep: #4a0307;
-  --jade-table: #0b4f38;
-  --jade-dark: #05291c;
-  --jade-bright: #147a58;
-  --tile-ivory: #fcf8ee;
-  --tile-shadow: #cbbba0;
-}
+/* Authentic PG Soft Mahjong Ways (1) Official Styling & Layout */
+/* Uses 100% genuine extracted PG Soft textures and sprite sheets */
 
 * {
   box-sizing: border-box;
@@ -27,935 +14,1278 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #090504;
-  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #1a0604;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   color: #ffffff;
 }
 
-/* Desktop Ambient Backdrop */
+.hidden {
+  display: none !important;
+}
+
+/* Desktop Blurred PG Soft Backdrop (Matches screen_6s.png & after_mulai_1.png side bars) */
 .app-backdrop {
   position: fixed;
   inset: 0;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(180, 20, 30, 0.35), transparent 55%),
-    radial-gradient(circle at 80% 70%, rgba(212, 160, 23, 0.25), transparent 55%),
-    linear-gradient(180deg, #1b0507 0%, #090304 50%, #051811 100%);
+  background: #2b0905 url('../assets/pg_native/images/e68edb8f51.e78d1.jpg') center center / cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1;
 }
 
-/* Traditional Chinese lattice pattern overlay on desktop sides */
 .app-backdrop::before {
   content: '';
   position: absolute;
   inset: 0;
-  opacity: 0.08;
-  background-image:
-    repeating-linear-gradient(45deg, #f7c548 0, #f7c548 1px, transparent 1px, transparent 24px),
-    repeating-linear-gradient(-45deg, #f7c548 0, #f7c548 1px, transparent 1px, transparent 24px);
+  backdrop-filter: blur(22px) brightness(0.68);
+  -webkit-backdrop-filter: blur(22px) brightness(0.68);
   pointer-events: none;
 }
 
-/* Main PG Soft Portrait Container (9:16 mobile aspect ratio) */
+/* Main PG Soft Portrait Container (Exact 9:16 mobile aspect ratio = 756:1344) */
 .game-shell {
   position: relative;
-  width: 100%;
-  max-width: 470px;
   height: 100dvh;
-  max-height: 880px;
-  background: linear-gradient(180deg, #63080e 0%, #104d37 22%, #073524 72%, #190d0a 100%);
-  box-shadow:
-    0 0 60px rgba(0, 0, 0, 0.95),
-    0 0 0 2px rgba(247, 197, 72, 0.45);
+  aspect-ratio: 9 / 16;
+  width: auto;
+  max-width: 100vw;
+  background: #0d3b26;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.92);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 2;
 }
 
-@media (min-height: 881px) and (min-width: 500px) {
-  .game-shell {
-    border-radius: 20px;
-    height: 94dvh;
-  }
+/* Screen Shake on Big Cascades */
+.game-shell.screen-shake {
+  animation: boardShake 0.3s cubic-bezier(0.36, 0.07, 0.19, 0.97);
 }
 
-/* Free Spin Mode Shell Theme */
-.game-shell.freespin-mode {
-  background: linear-gradient(180deg, #8f0815 0%, #4a040c 25%, #2d050a 72%, #140305 100%);
-  box-shadow:
-    0 0 80px rgba(255, 40, 40, 0.45),
-    0 0 0 2px #ffcb57;
+@keyframes boardShake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-4px, 3px); }
+  40% { transform: translate(4px, -3px); }
+  60% { transform: translate(-3px, -2px); }
+  80% { transform: translate(3px, 2px); }
 }
 
-/* ==========================================
-   1. PG SOFT SPLASH & INTRO SCREEN
-   ========================================== */
+/* =========================================================
+   1. OFFICIAL PG SOFT SPLASH & LOADING SCREEN
+   Matches screen_6s.png & game_25s.png 1:1
+   ========================================================= */
 .splash-overlay {
   position: absolute;
   inset: 0;
   z-index: 200;
-  background: radial-gradient(circle at 50% 35%, #7c0a12 0%, #2b0306 60%, #0e0203 100%);
+  background: #240504 url('../assets/pg_native/images/e68edb8f51.e78d1.jpg') center top / 100% 100% no-repeat;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding: 28px 22px 32px;
-  transition: opacity 0.45s ease, visibility 0.45s ease;
+  justify-content: flex-end;
+  padding: 0 20px 10px;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
-.splash-overlay.hidden {
+.splash-overlay.fade-out {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
 
-.pg-brand-top {
+.splash-center-cta {
+  width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  font-weight: 900;
-  letter-spacing: 1.5px;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 62px;
 }
 
-.pg-brand-top span.pg-badge {
-  background: linear-gradient(135deg, #ffdf6c, #d48806);
-  color: #210700;
-  padding: 2px 7px;
-  border-radius: 4px;
-  font-weight: 900;
-}
-
-.splash-hero {
+/* Red Progress Bar State (screen_6s.png) */
+.pg-load-area {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: 100%;
 }
 
-.splash-tiles-art {
+.pg-progress-track {
+  width: 69%;
+  height: 18px;
+  background: #0d0d0d;
+  border-radius: 5px;
+  border: 1.5px solid #000000;
+  padding: 2px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+.pg-progress-fill {
+  width: 20%;
+  height: 100%;
+  border-radius: 3px;
+  background: repeating-linear-gradient(
+    -55deg,
+    #eb1e2c 0px,
+    #eb1e2c 10px,
+    #ff4f5e 10px,
+    #ff4f5e 20px
+  );
   position: relative;
-  width: 240px;
-  height: 155px;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: width 0.16s ease;
 }
 
-.splash-tile-card {
-  width: 78px;
-  height: 102px;
-  background: linear-gradient(145deg, #fffdf7 0%, #f1e6d0 100%);
-  border-radius: 12px;
-  border: 3px solid #e6c687;
-  box-shadow:
-    0 8px 0 #0e6342,
-    0 14px 25px rgba(0, 0, 0, 0.65),
-    inset 0 2px 3px #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.pg-progress-fill::after {
+  content: '';
   position: absolute;
-  animation: floatTile 3s ease-in-out infinite;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 18px;
+  background: linear-gradient(90deg, transparent, #ffffff);
+  border-radius: 0 3px 3px 0;
 }
 
-.splash-tile-card.t-left {
-  transform: rotate(-16deg) translate(-62px, 10px);
-  animation-delay: 0s;
-}
-
-.splash-tile-card.t-center {
-  width: 88px;
-  height: 114px;
-  z-index: 3;
-  background: linear-gradient(145deg, #fff6b3 0%, #f0b028 55%, #b57204 100%);
-  border-color: #fff3a6;
-  box-shadow:
-    0 8px 0 #7a4600,
-    0 0 30px rgba(255, 215, 0, 0.75);
-  transform: translateY(-6px);
-  animation-delay: 0.4s;
-}
-
-.splash-tile-card.t-right {
-  transform: rotate(16deg) translate(62px, 10px);
-  animation-delay: 0.8s;
-}
-
-@keyframes floatTile {
-  0%, 100% { margin-top: 0px; }
-  50% { margin-top: -8px; }
-}
-
-.splash-title-cn {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 46px;
-  font-weight: 900;
-  background: linear-gradient(180deg, #fff9c4 0%, #ffd54f 45%, #e68a00 85%, #8c4300 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 0 #4a0609) drop-shadow(0 8px 16px rgba(0,0,0,0.85));
-  letter-spacing: 3px;
-  line-height: 1.05;
-}
-
-.splash-title-en {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 20px;
-  font-weight: 900;
-  color: #ffe57f;
-  letter-spacing: 4px;
-  margin-top: 2px;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
-}
-
-.splash-features-card {
-  margin-top: 18px;
-  width: 100%;
-  background: rgba(20, 4, 6, 0.72);
-  border: 1.5px solid rgba(247, 197, 72, 0.45);
-  border-radius: 14px;
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  box-shadow: inset 0 0 20px rgba(247, 197, 72, 0.12);
-}
-
-.splash-feature-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-align: left;
-  font-size: 13px;
-  color: #fce8b2;
-  line-height: 1.35;
-}
-
-.splash-feature-badge {
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #f7c548, #a66300);
-  color: #2b0505;
-  font-weight: 900;
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.5);
-}
-
-.splash-start-btn {
-  width: 82%;
-  padding: 15px 24px;
-  border-radius: 999px;
-  border: 2.5px solid #fff3a1;
-  background: linear-gradient(180deg, #27c267 0%, #0e8a3e 55%, #065724 100%);
+.pg-load-status {
+  margin-top: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
   color: #ffffff;
-  font-size: 20px;
-  font-weight: 900;
-  letter-spacing: 2px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95);
+}
+
+.pg-load-tip {
+  margin-top: 22px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.38;
+  max-width: 92%;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95);
+}
+
+/* Glossy Red MULAI Button (game_25s.png) */
+.pg-mulai-btn {
+  width: 162px;
+  height: 44px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255, 190, 190, 0.75);
+  background: linear-gradient(180deg, #ff7a82 0%, #f02c37 48%, #d61b26 100%);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
   cursor: pointer;
   box-shadow:
-    0 6px 0 #043817,
-    0 10px 25px rgba(0, 0, 0, 0.7),
-    inset 0 2px 2px rgba(255, 255, 255, 0.45);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.65);
-  transition: transform 0.12s ease, filter 0.15s ease;
+    0 4px 12px rgba(0, 0, 0, 0.65),
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.6);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+  transition: transform 0.1s ease, filter 0.15s ease;
+  margin-bottom: 18px;
 }
 
-.splash-start-btn:hover {
+.pg-mulai-btn:hover {
   filter: brightness(1.08);
 }
 
-.splash-start-btn:active {
-  transform: translateY(3px);
-  box-shadow: 0 3px 0 #043817;
-}
-
-/* ==========================================
-   2. TOP STATUS BAR & MULTIPLIER HEADER
-   ========================================== */
-.top-status-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5px 12px 3px;
-  font-size: 11px;
-  font-weight: 700;
-  color: rgba(255, 240, 200, 0.85);
-  background: rgba(0, 0, 0, 0.35);
-  z-index: 15;
-}
-
-.status-left, .status-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* Imperial Red & Gold Multiplier Bar */
-.header-multiplier-zone {
-  position: relative;
-  background:
-    radial-gradient(ellipse at 50% 0%, #d91c2b 0%, #870812 65%, #4d0308 100%);
-  border-top: 2px solid #f7c548;
-  border-bottom: 3px solid #d49b27;
-  padding: 6px 10px 8px;
-  box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.65),
-    inset 0 1px 0 rgba(255, 255, 255, 0.35);
-  z-index: 12;
-}
-
-.game-shell.freespin-mode .header-multiplier-zone {
-  background:
-    radial-gradient(ellipse at 50% 0%, #ff3d00 0%, #b7091c 55%, #59020b 100%);
-  box-shadow: 0 0 22px rgba(255, 160, 0, 0.6);
-}
-
-.header-ways-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 5px;
-}
-
-.brand-mini-title {
-  font-family: 'Noto Serif SC', serif;
-  font-weight: 900;
-  font-size: 15px;
-  color: #ffe699;
-  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.8);
-  letter-spacing: 1px;
-}
-
-.ways-pill {
-  background: linear-gradient(180deg, #3b0408, #1f0103);
-  border: 1px solid #f7c548;
-  color: #ffea9f;
-  padding: 2px 9px;
-  border-radius: 99px;
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 0.6px;
-}
-
-.demo-quick-actions {
-  display: flex;
-  gap: 5px;
-}
-
-.btn-demo-chip {
-  background: linear-gradient(180deg, #ffe066 0%, #c88200 100%);
-  color: #2b0800;
-  border: 1px solid #fff6b3;
-  border-radius: 6px;
-  padding: 2px 7px;
-  font-size: 10px;
-  font-weight: 900;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.45);
-  transition: transform 0.1s;
-}
-
-.btn-demo-chip:active {
+.pg-mulai-btn:active {
   transform: scale(0.95);
 }
 
-/* Multiplier Steps Bar (x1, x2, x3, x5) */
-.multiplier-track {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+/* Official Splash Footer (PG Soft + MGA + BMM) */
+.splash-footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 8px;
-  background: linear-gradient(180deg, #2d0205 0%, #4a060b 100%);
-  border: 2px solid #e3a82b;
-  border-radius: 999px;
-  padding: 4px 8px;
-  box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.85);
 }
 
-.mult-step {
-  text-align: center;
-  padding: 3px 0;
-  border-radius: 999px;
+.splash-cert-row {
+  width: 92%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pg-pixel-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+.pg-pixel-text {
+  font-size: 32px;
   font-weight: 900;
-  font-size: 19px;
-  color: #8c6239;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
-  position: relative;
+  letter-spacing: 2px;
+  line-height: 0.95;
+  background: linear-gradient(90deg, #ff5252 0%, #ffeb3b 35%, #4caf50 70%, #29b6f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.8));
 }
 
-.mult-step.active {
-  background: radial-gradient(circle at 50% 30%, #fff6a9 0%, #f5a623 55%, #b85d00 100%);
-  color: #4a0404;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
-  box-shadow:
-    0 0 16px rgba(255, 213, 79, 0.95),
-    inset 0 2px 2px #ffffff;
-  transform: scale(1.08);
+.pg-pixel-sub {
+  font-size: 6.5px;
+  font-weight: 800;
+  letter-spacing: 0.7px;
+  color: #e0e0e0;
+  margin-top: 3px;
 }
 
-/* Marquee & Win Ticker Banner */
-.marquee-banner {
+.splash-cert-img {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.92;
+}
+
+.splash-copyright {
+  font-size: 8.5px;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.3px;
+  text-align: center;
+}
+
+/* =========================================================
+   2. OFFICIAL PG SOFT TOP WOODEN HEADER
+   Matches after_mulai_1.png 1:1
+   ========================================================= */
+.pg-top-header {
   position: relative;
-  height: 30px;
-  background: linear-gradient(90deg, #210709 0%, #520b12 50%, #210709 100%);
-  border-bottom: 2px solid #c99327;
+  width: 100%;
+  height: 17.5%;
+  flex-shrink: 0;
+  z-index: 20;
+  overflow: visible;
+}
+
+.hdr-bg-wood {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+/* 1024 CARA Terracotta Bar */
+.hdr-ways-bar {
+  position: absolute;
+  top: 8%;
+  left: 0;
+  width: 100%;
+  height: 48%;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  padding: 0 12px;
-  z-index: 11;
 }
 
-.marquee-text {
-  font-size: 12.5px;
-  font-weight: 800;
-  color: #ffecb3;
-  white-space: nowrap;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
-  letter-spacing: 0.3px;
+.ways-bar-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
 }
 
-.marquee-banner.win-highlight {
-  background: linear-gradient(90deg, #592500 0%, #d48806 50%, #592500 100%);
-  border-bottom-color: #fff3a1;
+.ways-bar-text {
+  position: relative;
+  z-index: 3;
+  height: 36%;
+  width: auto;
+  margin-top: -2px;
+  opacity: 0.88;
 }
 
-.marquee-banner.win-highlight .marquee-text {
-  font-size: 15px;
-  font-weight: 900;
-  color: #ffffff;
-  text-shadow: 0 2px 4px #3d0000, 0 0 12px #ffd700;
-  animation: pulseWinText 0.45s ease-in-out infinite alternate;
-}
-
-@keyframes pulseWinText {
-  from { transform: scale(1); }
-  to { transform: scale(1.06); }
-}
-
-/* Free Spins Counter Banner (Shown during Free Spins) */
-.freespin-status-banner {
-  display: none;
-  background: linear-gradient(90deg, #5c0009, #c41224, #5c0009);
-  border-bottom: 2px solid #ffd54f;
-  padding: 4px 14px;
-  align-items: center;
-  justify-content: space-between;
-  font-weight: 900;
-  font-size: 13px;
-  color: #fff8e1;
-  z-index: 11;
-}
-
-.game-shell.freespin-mode .freespin-status-banner {
+/* Multiplier Wooden / Red Bar (x1 x2 x3 x5 / x2 x4 x6 x10) */
+.hdr-mult-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 46%;
+  z-index: 4;
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.fs-count-badge {
-  background: #ffd54f;
-  color: #4a0307;
-  padding: 1px 9px;
-  border-radius: 99px;
-  font-size: 14px;
-  font-weight: 900;
+.mult-bar-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
 }
 
-/* ==========================================
-   3. MAHJONG WAYS 1 REEL BOARD (5x4 GRID)
-   ========================================== */
+.mult-bar-bg.bonus-bg {
+  display: none;
+}
+
+.game-shell.freespin-mode .mult-bar-bg.normal-bg {
+  display: none;
+}
+
+.game-shell.freespin-mode .mult-bar-bg.bonus-bg {
+  display: block;
+}
+
+.mult-slots {
+  position: relative;
+  z-index: 5;
+  width: 72%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  justify-items: center;
+  margin-left: 14px;
+  margin-top: -2px;
+}
+
+.mult-slot {
+  position: relative;
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mult-img-inactive {
+  height: 31px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.mult-img-active {
+  position: absolute;
+  height: 46px;
+  width: auto;
+  object-fit: contain;
+  display: none;
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.9));
+  animation: multPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mult-slot.active .mult-img-inactive {
+  display: none;
+}
+
+.mult-slot.active .mult-img-active {
+  display: block;
+}
+
+@keyframes multPop {
+  0% { transform: scale(0.75); }
+  100% { transform: scale(1.06); }
+}
+
+/* Top-Right Golden Trophy / Quick Demo Trigger */
+.hdr-trophy-btn {
+  position: absolute;
+  top: 24px;
+  right: 10px;
+  z-index: 10;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 215, 0, 0.65);
+  background: radial-gradient(circle at 35% 30%, #4a3525 0%, #1f140d 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.75);
+}
+
+.hdr-trophy-btn .trophy-icon {
+  font-size: 18px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8));
+}
+
+.hdr-trophy-btn .trophy-dot {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff2a2a;
+  border: 1px solid #fff;
+}
+
+.demo-popup-menu {
+  position: absolute;
+  top: 62px;
+  right: 10px;
+  z-index: 50;
+  background: rgba(24, 12, 8, 0.96);
+  border: 1.5px solid #f5b942;
+  border-radius: 10px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85);
+}
+
+.demo-popup-item {
+  background: linear-gradient(180deg, #4a1c10, #290d06);
+  border: 1px solid rgba(245, 185, 66, 0.45);
+  color: #ffe8a3;
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.demo-popup-item:hover {
+  background: linear-gradient(180deg, #f5b942, #b87700);
+  color: #1f0800;
+}
+
+/* =========================================================
+   3. OFFICIAL PG SOFT 5-REEL GREEN FELT BOARD
+   Matches after_mulai_1.png 1:1
+   Notice in after_mulai_1.png:
+   - Green felt background (`reel_a.png`)
+   - 5 columns packed edge-to-edge horizontally
+   - Staggered vertical alignment: cols 1 & 3 sit slightly higher than cols 0, 2, 4, with top and bottom peeking tiles!
+   ========================================================= */
 .reel-stage-wrapper {
   position: relative;
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 8px;
+  width: 100%;
   overflow: hidden;
-  /* Jade green traditional mahjong felt table */
-  background:
-    radial-gradient(circle at 50% 50%, #167553 0%, #0a4832 70%, #05261a 100%);
-  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.85);
+  background: #1d6328 url('../assets/sprites/reel_a.png') center center / 100% 100% no-repeat;
+  z-index: 10;
 }
 
-.game-shell.freespin-mode .reel-stage-wrapper {
-  background:
-    radial-gradient(circle at 50% 50%, #80131e 0%, #42060c 70%, #1f0205 100%);
-}
-
-/* Ornate Gold Frame around the 5x4 Reels */
 .reel-board-frame {
   position: relative;
   width: 100%;
   height: 100%;
-  max-height: 450px;
-  background: rgba(4, 24, 16, 0.72);
-  border: 3px solid #d99f26;
-  border-radius: 12px;
-  padding: 5px;
-  box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.8),
-    inset 0 0 18px rgba(0, 0, 0, 0.9);
+  padding: 0 3.2%;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 5px;
-}
-
-/* Subtle golden highlight on middle 3 reels (Reels 2, 3, 4 where Gold Tiles appear) */
-.reel-column {
-  position: relative;
-  display: grid;
-  grid-template-rows: repeat(4, 1fr);
-  gap: 5px;
-  background: rgba(0, 0, 0, 0.28);
-  border-radius: 8px;
-  padding: 2px;
+  gap: 0px;
   overflow: hidden;
 }
 
-.reel-column.gold-zone {
-  background: linear-gradient(180deg, rgba(247, 197, 72, 0.14) 0%, rgba(247, 197, 72, 0.05) 50%, rgba(247, 197, 72, 0.14) 100%);
-  border-left: 1px solid rgba(247, 197, 72, 0.28);
-  border-right: 1px solid rgba(247, 197, 72, 0.28);
+.reel-column {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
 }
 
-/* Individual 3D Mahjong Tile Cell */
+/* Authentic PG Soft Mahjong Ways 1 Staggered Reel Offset (see after_mulai_1.png):
+   Reels 2 & 4 (data-col 1 & 3) are shifted slightly up relative to Reels 1, 3, 5! */
+.reel-column.col-inner {
+  transform: translateY(-1.4%);
+}
+
+/* Scatter Anticipation Fire Column Glow */
+.reel-column.anticipation-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2.5px solid #ffcf33;
+  box-shadow: inset 0 0 28px rgba(255, 166, 0, 0.85), 0 0 24px rgba(255, 200, 0, 0.9);
+  pointer-events: none;
+  z-index: 15;
+  animation: anticipationPulse 0.22s ease-in-out infinite alternate;
+}
+
+@keyframes anticipationPulse {
+  from { opacity: 0.65; }
+  to { opacity: 1; }
+}
+
+/* Tile Cells (Top Peek + 4 Playable Rows + Bottom Peek)
+   Locked to exact 162:190 aspect ratio and stretched 100% edge-to-edge so there is ZERO horizontal gap! */
 .tile-cell {
   position: relative;
   width: 100%;
-  height: 100%;
-  border-radius: 9px;
+  aspect-ratio: 162 / 190;
+  height: auto;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  transform-origin: center center;
-  transition: transform 0.18s ease, opacity 0.18s ease, filter 0.18s ease;
   cursor: pointer;
+  margin: -1.5% 0;
+  transition: filter 0.16s ease, transform 0.16s ease;
 }
 
-/* 3D Mahjong Tile Body */
-.mahjong-tile {
+.tile-cell.peek-top {
+  aspect-ratio: auto;
+  height: 9%;
+  margin-top: -4%;
+  pointer-events: none;
+  overflow: hidden;
+  align-items: flex-end;
+}
+
+.tile-cell.peek-bottom {
+  aspect-ratio: auto;
+  height: 9%;
+  margin-bottom: -4%;
+  pointer-events: none;
+  overflow: hidden;
+  align-items: flex-start;
+}
+
+.tile-cell.peek-top .pg-tile,
+.tile-cell.peek-bottom .pg-tile {
+  width: 100%;
+  aspect-ratio: 162 / 190;
+  height: auto;
+}
+
+/* Dim non-winning tiles during win highlight */
+.reel-board-frame.has-active-win .tile-cell:not(.winning) {
+  filter: brightness(0.48);
+}
+
+/* Composite PG Soft Sprite Tile */
+.pg-tile {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 9px;
-  /* Classic 3D Ivory Mahjong Tile with Jade-Green Backing */
-  background: linear-gradient(160deg, #ffffff 0%, #fcf6e8 60%, #e5d7be 100%);
-  border: 1.5px solid #e2d1b3;
-  border-bottom: 6px solid #0f7852;
-  box-shadow:
-    0 3px 6px rgba(0, 0, 0, 0.65),
-    inset 0 2px 1px #ffffff,
-    inset 0 -2px 3px rgba(173, 148, 109, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px;
-  overflow: hidden;
 }
 
-/* Gold-Plated Mahjong Tile (Reels 2, 3, 4 Special Feature) */
-.mahjong-tile.gold-plated {
-  background: linear-gradient(150deg, #fff8b8 0%, #f7c331 45%, #c78206 85%, #f5d061 100%);
-  border: 1.5px solid #fff3a1;
-  border-bottom: 6px solid #8a4e00;
-  box-shadow:
-    0 3px 8px rgba(0, 0, 0, 0.75),
-    0 0 12px rgba(255, 208, 0, 0.45),
-    inset 0 2px 2px #ffffff;
-}
-
-.mahjong-tile.gold-plated::after {
-  content: '';
+.pg-tile .tile-layer {
   position: absolute;
-  top: -50%;
-  left: -60%;
-  width: 50%;
-  height: 200%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
-  transform: rotate(25deg);
-  animation: goldShimmer 2.8s infinite;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
   pointer-events: none;
 }
 
-@keyframes goldShimmer {
-  0% { left: -60%; }
-  45%, 100% { left: 130%; }
+.pg-tile .tile-base {
+  z-index: 1;
+  transform: scale(1.015);
 }
 
-/* WILD Tile Styling */
-.mahjong-tile.tile-wild {
-  background: radial-gradient(circle at 50% 35%, #5e0811 0%, #2b0205 100%);
-  border: 2px solid #ffd54f;
-  border-bottom: 6px solid #996500;
-  box-shadow:
-    0 0 14px rgba(255, 200, 0, 0.65),
-    inset 0 0 10px rgba(255, 193, 7, 0.4);
+.pg-tile .tile-glyph {
+  z-index: 2;
+  transform: scale(1.01);
 }
 
-/* SCATTER (胡) Tile Styling */
-.mahjong-tile.tile-scatter {
-  background: radial-gradient(circle at 50% 35%, #ffda66 0%, #d41420 55%, #6e040b 100%);
-  border: 2px solid #fff199;
-  border-bottom: 6px solid #8c060e;
-  box-shadow:
-    0 0 16px rgba(255, 60, 60, 0.8),
-    inset 0 0 10px rgba(255, 235, 140, 0.5);
+/* Small golden sycee ingot emblem at bottom center of gold-plated tiles (see after_mulai_1.png!) */
+.pg-tile .gold-ingot-badge {
+  z-index: 3;
+  inset: auto;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28%;
+  height: auto;
 }
 
-.mahjong-tile svg {
-  width: 90%;
-  height: 90%;
-  display: block;
+/* Wild Tile Layers (see after_mulai_1.png col 2 row 0 & row 3) */
+.pg-tile-wild .base-ingot {
+  z-index: 2;
+  transform: translateY(10%) scale(1.02);
 }
 
-/* Spin & Drop Animations */
-.tile-cell.spinning {
-  animation: reelBlurSpin 0.14s linear infinite;
-  filter: blur(1.5px);
+.pg-tile-wild .sym-wild {
+  z-index: 3;
+  transform: translateY(-4%) scale(1.04);
 }
 
-@keyframes reelBlurSpin {
-  0% { transform: translateY(-18%); }
-  100% { transform: translateY(18%); }
+/* Scatter Tile Layers (see after_mulai_1.png col 1 row 2 & col 3 row 1) */
+.tile-cell.has-scatter {
+  z-index: 8;
 }
 
-.tile-cell.drop-in {
-  animation: tileDropBounce 0.34s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+.pg-tile-scatter .scatter-bg-glow {
+  z-index: 1;
+  transform: scale(1.36);
 }
 
-@keyframes tileDropBounce {
+.pg-tile-scatter .sym-scatter {
+  z-index: 3;
+  transform: scale(1.12);
+}
+
+/* Authentic PG Soft Reel Spin & Cascade Animations (Normal Relaxed Mode vs. Turbo Fast Mode) */
+.tile-cell {
+  will-change: transform, opacity;
+}
+
+.tile-cell.spin-windup {
+  animation: pgSpinWindup 0.14s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+
+@keyframes pgSpinWindup {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-20%); }
+}
+
+/* Continuous Conveyor Reel Scroll Strip during Spinning */
+.reel-scroll-strip {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+  animation: pgReelStripFlow 0.28s linear infinite;
+}
+
+.game-shell.turbo-mode .reel-scroll-strip {
+  animation: pgReelStripFlow 0.14s linear infinite;
+}
+
+@keyframes pgReelStripFlow {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0%); }
+}
+
+/* Smooth Column Stop Landing with PG Soft BounceBackStopScroller Physics */
+.tile-cell.reel-stop-land {
+  animation: pgReelStopLand 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.game-shell.turbo-mode .tile-cell.reel-stop-land {
+  animation: pgReelStopLand 0.17s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes pgReelStopLand {
+  0% { transform: translateY(-135%); }
+  68% { transform: translateY(8%); }
+  86% { transform: translateY(-2%); }
+  100% { transform: translateY(0); }
+}
+
+/* Selective Per-Tile Gravity Drop (ShiftSlotHandler) using --drop-rows CSS variable */
+.tile-cell.cascade-shift {
+  animation: pgCascadeGravity var(--drop-dur, 0.42s) cubic-bezier(0.32, 0, 0.67, 0) var(--drop-delay, 0ms) both;
+}
+
+@keyframes pgCascadeGravity {
   0% {
-    transform: translateY(-95px) scale(0.92);
-    opacity: 0.2;
+    transform: translateY(calc(var(--drop-rows, 1) * -100%));
   }
-  70% {
-    transform: translateY(5px) scale(1.02);
-    opacity: 1;
+  72% {
+    transform: translateY(0%);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  86% {
+    transform: translateY(-5%);
+    animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0);
   }
   100% {
-    transform: translateY(0) scale(1);
-    opacity: 1;
+    transform: translateY(0%);
   }
 }
 
-/* Winning Tile Glow & Shatter */
-.tile-cell.winning .mahjong-tile {
-  border-color: #ffffff;
-  box-shadow:
-    0 0 22px #ffeb3b,
-    0 0 35px #ff9800,
-    inset 0 0 15px #fff59d;
-  animation: winTilePulse 0.28s ease-in-out infinite alternate;
-  z-index: 5;
+/* Winning Tile Highlight (Relaxed Pulse in Normal Mode) */
+.tile-cell.winning {
+  z-index: 12;
+  filter: brightness(1.16) drop-shadow(0 0 14px #ffd700) !important;
+  animation: pgWinPulse 0.42s ease-in-out infinite alternate;
 }
 
-@keyframes winTilePulse {
+.game-shell.turbo-mode .tile-cell.winning {
+  animation: pgWinPulse 0.22s ease-in-out infinite alternate;
+}
+
+@keyframes pgWinPulse {
   from { transform: scale(1); }
   to { transform: scale(1.08); }
 }
 
+/* Tile Shatter / Rotate Collapse */
 .tile-cell.exploding {
-  animation: tileExplodeOut 0.32s ease-in forwards;
+  animation: pgTileShrink 0.44s cubic-bezier(0.36, 0, 0.66, -0.56) forwards;
 }
 
-@keyframes tileExplodeOut {
-  0% { transform: scale(1.1); opacity: 1; filter: brightness(2); }
-  100% { transform: scale(0.2); opacity: 0; filter: brightness(3); }
+.game-shell.turbo-mode .tile-cell.exploding {
+  animation: pgTileShrink 0.2s ease-in forwards;
 }
 
+@keyframes pgTileShrink {
+  0% { transform: scale(1.06) rotateY(0deg); opacity: 1; filter: brightness(1.8); }
+  45% { transform: scale(1.12) rotateY(90deg); opacity: 0.9; filter: brightness(2.2); }
+  100% { transform: scale(0.08) rotateY(180deg); opacity: 0; }
+}
+
+/* Gold Tile Morphing into Wild Ingot */
 .tile-cell.morphing-wild {
-  animation: morphToWild 0.48s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  z-index: 14;
+  animation: pgMorphWild 0.52s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-@keyframes morphToWild {
-  0% { transform: rotateY(0deg) scale(1.12); filter: brightness(2.2); }
-  50% { transform: rotateY(90deg) scale(1.22); }
-  100% { transform: rotateY(0deg) scale(1); filter: brightness(1); }
+.game-shell.turbo-mode .tile-cell.morphing-wild {
+  animation: pgMorphWild 0.24s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-/* Floating Win Amount Popup on Board */
-.board-win-float {
+@keyframes pgMorphWild {
+  0% { transform: scale(1.1) rotateY(0deg); filter: brightness(2.2); }
+  50% { transform: scale(1.24) rotateY(90deg); filter: brightness(2.5); }
+  100% { transform: scale(1) rotateY(0deg); filter: brightness(1); }
+}
+
+/* Particle Canvas Overlay */
+.fx-canvas-overlay {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%) scale(0.5);
-  z-index: 30;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  background: radial-gradient(circle, rgba(168, 12, 24, 0.94) 0%, rgba(64, 4, 9, 0.96) 100%);
-  border: 2.5px solid #ffd54f;
-  border-radius: 16px;
-  padding: 10px 22px;
-  text-align: center;
-  box-shadow: 0 0 35px rgba(255, 200, 0, 0.85), 0 10px 25px rgba(0,0,0,0.8);
-  opacity: 0;
-  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 25;
 }
 
-.board-win-float.show {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.board-win-float .float-label {
-  font-size: 11px;
-  font-weight: 900;
-  color: #ffe082;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-}
-
-.board-win-float .float-amount {
-  font-size: 24px;
-  font-weight: 900;
-  color: #ffffff;
-  text-shadow: 0 2px 6px #000, 0 0 14px #ffc107;
-}
-
-/* ==========================================
-   4. PG SOFT BOTTOM CONTROL DASHBOARD
-   ========================================== */
-.control-dashboard {
-  position: relative;
-  background: linear-gradient(180deg, #0b291d 0%, #071912 38%, #040d09 100%);
-  border-top: 3px solid #c99327;
-  padding: 8px 12px 14px;
-  z-index: 15;
-  box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.75);
-}
-
-/* Wallet / Bet / Win Status Strip */
-.wallet-info-strip {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
-  margin-bottom: 10px;
-}
-
-.info-meter {
-  background: rgba(0, 0, 0, 0.52);
-  border: 1px solid rgba(247, 197, 72, 0.32);
-  border-radius: 8px;
-  padding: 4px 8px;
+/* Single Tile Payout Popup (when user taps a tile on the board) */
+.tile-payout-popup {
+  position: absolute;
+  inset: 0;
+  z-index: 35;
+  background: rgba(0, 0, 0, 0.45);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.info-meter .meter-label {
-  font-size: 10px;
-  font-weight: 800;
-  color: #a7c4b8;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.info-meter .meter-label i {
-  color: #f7c548;
-}
-
-.info-meter .meter-value {
-  font-size: 13px;
-  font-weight: 900;
-  color: #ffffff;
-  margin-top: 1px;
-  white-space: nowrap;
-}
-
-.info-meter.win-meter .meter-value {
-  color: #ffd54f;
-}
-
-/* 5-Button PG Soft Action Row */
-.action-buttons-row {
+.tpp-card {
+  background: url('../assets/pg_native/images/atlas_57_253x141.png') center center / 100% 100% no-repeat;
+  width: 220px;
+  height: 126px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2px 6px;
+  padding: 14px 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.85);
 }
 
-.ctrl-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 2px solid #c99327;
-  background: radial-gradient(circle at 50% 30%, #1c523c 0%, #09261a 100%);
-  color: #ffecb3;
+.tpp-card .tpp-tile {
+  width: 74px;
+  height: 88px;
+  position: relative;
+}
+
+.tpp-card .tpp-pays {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 1px 3px #000;
+}
+
+.tpp-card .tpp-pays span em {
+  font-style: normal;
+  color: #ffd54f;
+  margin-right: 8px;
+}
+
+/* =========================================================
+   4. OFFICIAL PG SOFT WOODEN BOTTOM DASHBOARD
+   Matches after_mulai_1.png 1:1
+   ========================================================= */
+.pg-bottom-dashboard {
+  position: relative;
+  width: 100%;
+  height: 29.5%;
+  flex-shrink: 0;
+  z-index: 20;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  padding: 1.5% 0 1%;
+}
+
+.btm-bg-wood {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.btm-bg-wood.bonus-btm-bg {
+  display: none;
+}
+
+.game-shell.freespin-mode .btm-bg-wood.normal-btm-bg {
+  display: none;
+}
+
+.game-shell.freespin-mode .btm-bg-wood.bonus-btm-bg {
+  display: block;
+}
+
+.btm-top-rim {
+  position: absolute;
+  top: -4px;
+  left: 0;
+  width: 100%;
+  height: 52px;
+  object-fit: fill;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Ornate Red & Gold Chinese Knot Marquee Banner */
+.pg-infoboard-wrap {
+  position: relative;
+  z-index: 5;
+  width: 92%;
+  height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.infoboard-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.infoboard-Viewport {
+  position: relative;
+  z-index: 2;
+  width: 73%;
+  height: 70%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.infoboard-sprite-ticker {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.infoboard-sprite-ticker img {
+  height: 76%;
+  width: auto;
+  max-width: none;
+  animation: pgMarqueeScroll 8.5s linear infinite;
+}
+
+@keyframes pgMarqueeScroll {
+  0% { transform: translateX(35%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Win Display inside Infoboard */
+.infoboard-win-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+  animation: multPop 0.22s ease-out;
+}
+
+.win-badge-img {
+  height: 22px;
+  width: auto;
+  object-fit: contain;
+}
+
+.infoboard-win-amount {
+  font-size: 18px;
+  font-weight: 900;
+  color: #fff6a9;
+  text-shadow: 0 2px 3px #2b0000, 0 0 10px rgba(255, 215, 0, 0.8);
+}
+
+/* Free Spins Counter Bar */
+.freespin-counter-bar {
+  position: relative;
+  z-index: 6;
+  width: 88%;
+  background: linear-gradient(90deg, rgba(80, 4, 10, 0.9), rgba(168, 12, 24, 0.95), rgba(80, 4, 10, 0.9));
+  border: 1.5px solid #ffd54f;
+  border-radius: 99px;
+  padding: 2px 14px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 900;
+  color: #fff3b0;
+}
+
+.fs-remaining-num {
+  font-size: 15px;
+  color: #ffffff;
+  background: #b80c18;
+  padding: 0 8px;
+  border-radius: 99px;
+  border: 1px solid #ffd54f;
+}
+
+/* 3 Rounded Dark Pill Meters (Wallet | PG Shield | Bet) - Matches after_mulai_1.png */
+.pg-Wallet-pills-row {
+  position: relative;
+  z-index: 5;
+  width: 96%;
+  display: grid;
+  grid-template-columns: 1.38fr 0.74fr 1.38fr;
+  gap: 6px;
+  padding: 0 2px;
+}
+
+.pg-pill-meter {
+  height: 30px;
+  background: rgba(34, 20, 11, 0.68);
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  padding: 0 7px;
+  cursor: pointer;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.65);
+}
+
+.pg-pill-meter.pill-left {
+  justify-content: space-between;
+}
+
+.pg-pill-meter.pill-center {
+  justify-content: center;
+}
+
+.pg-pill-meter.pill-right {
+  justify-content: space-between;
+}
+
+.pill-icon-left {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.pill-icon-right {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.pill-value-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: #d6a97a;
+  flex: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pg-shield-icon {
+  height: 24px;
+  width: auto;
+  opacity: 0.55;
+  object-fit: contain;
+}
+
+.pill-win-box {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pill-win-tag {
+  height: 11px;
+  width: auto;
+}
+
+.pill-win-val {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #ffd54f;
+  white-space: nowrap;
+}
+
+/* 5 Iconic PG Soft Control Buttons Row - Matches after_mulai_1.png */
+.pg-controls-row {
+  position: relative;
+  z-index: 6;
+  width: 92%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pg-round-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(26, 15, 8, 0.76);
+  display: flex;
+  align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow:
-    0 4px 10px rgba(0, 0, 0, 0.65),
-    inset 0 1px 1px rgba(255, 255, 255, 0.25);
-  transition: transform 0.1s ease, filter 0.15s ease, border-color 0.15s;
-  font-weight: 900;
-  font-size: 16px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8), 0 2px 5px rgba(0, 0, 0, 0.45);
+  transition: transform 0.1s ease, filter 0.15s ease;
 }
 
-.ctrl-btn:hover {
-  filter: brightness(1.15);
-  border-color: #ffe082;
+.pg-round-btn:hover {
+  filter: brightness(1.18);
 }
 
-.ctrl-btn:active {
+.pg-round-btn:active {
   transform: scale(0.92);
 }
 
-.ctrl-btn.active-toggle {
-  background: radial-gradient(circle at 50% 30%, #f7c548 0%, #9e5800 100%);
-  color: #2b0500;
-  border-color: #fff8c4;
-  box-shadow: 0 0 15px rgba(247, 197, 72, 0.8);
+.btn-icon-sprite {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
-.ctrl-btn .btn-subtext {
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.4px;
-  margin-top: 1px;
+.btn-icon-sprite.icon-minus {
+  width: 16px;
+  height: 5px;
 }
 
-/* Center Iconic Spin Button */
-.spin-btn-main {
+.btn-icon-sprite.icon-plus {
+  width: 16px;
+  height: 16px;
+}
+
+/* Auto Spin Composite Icon */
+.auto-icon-composite {
   position: relative;
-  width: 82px;
-  height: 82px;
-  border-radius: 50%;
-  border: 4px solid #f7c548;
-  background: radial-gradient(circle at 50% 30%, #2ee675 0%, #0f9943 55%, #064d20 100%);
-  box-shadow:
-    0 6px 18px rgba(0, 0, 0, 0.85),
-    0 0 22px rgba(46, 230, 117, 0.45),
-    inset 0 3px 4px rgba(255, 255, 255, 0.55);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auto-circle-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.auto-play-img {
+  width: 8px;
+  height: 10px;
+  object-fit: contain;
+  margin-left: 1px;
+}
+
+/* Center Jade Green Spin Button (spin_base.png + spin_arrow.png) */
+.pg-jade-spin-btn {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  border: none;
+  background: transparent;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.12s ease, filter 0.15s ease;
+  margin: -4px 0;
+  transition: transform 0.1s ease, filter 0.15s ease;
 }
 
-.spin-btn-main::before {
-  content: '';
+.pg-jade-spin-btn:hover {
+  filter: brightness(1.06);
+}
+
+.pg-jade-spin-btn:active {
+  transform: scale(0.94);
+}
+
+.spin-base-img {
   position: absolute;
-  inset: 4px;
-  border-radius: 50%;
-  border: 1.5px dashed rgba(255, 243, 161, 0.65);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   pointer-events: none;
 }
 
-.spin-btn-main:hover {
-  filter: brightness(1.08);
+.spin-arrow-img {
+  position: relative;
+  z-index: 2;
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-top: -2px;
+  pointer-events: none;
+  animation: slowIdleSpin 9s linear infinite;
 }
 
-.spin-btn-main:active {
-  transform: scale(0.93);
+.pg-jade-spin-btn.spinning-state .spin-arrow-img {
+  animation: fastSpinRotate 0.65s linear infinite;
 }
 
-.spin-btn-main.spinning-state .spin-arrows-svg {
-  animation: rotateSpinIcon 0.55s linear infinite;
+.game-shell.turbo-mode .pg-jade-spin-btn.spinning-state .spin-arrow-img {
+  animation: fastSpinRotate 0.25s linear infinite;
 }
 
-@keyframes rotateSpinIcon {
+@keyframes slowIdleSpin {
   from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  to { transform: rotate(-360deg); }
 }
 
-.spin-arrows-svg {
-  width: 46px;
-  height: 46px;
-  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.6));
+@keyframes fastSpinRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
 }
 
 .auto-counter-badge {
   position: absolute;
-  inset: 0;
+  z-index: 4;
+  inset: 14px;
+  border-radius: 50%;
   display: none;
   align-items: center;
   justify-content: center;
   font-size: 22px;
   font-weight: 900;
   color: #ffffff;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
-  background: radial-gradient(circle, rgba(180, 16, 28, 0.92), rgba(75, 4, 10, 0.96));
-  border-radius: 50%;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
 }
 
-.spin-btn-main.auto-active .auto-counter-badge {
+.pg-jade-spin-btn.auto-active .spin-arrow-img {
+  opacity: 0.25;
+}
+
+.pg-jade-spin-btn.auto-active .auto-counter-badge {
   display: flex;
 }
 
-/* Bottom Utility Bar (Audio, Paytable, Rules) */
-.bottom-utility-bar {
+/* Subtle Bottom Utility Strip */
+.pg-mini-menu-row {
+  position: relative;
+  z-index: 6;
+  width: 96%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 8px;
-  padding-top: 6px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  font-size: 11px;
-  color: #9ab8ac;
+  gap: 3px;
+  margin-top: auto;
+  padding-bottom: 5px;
 }
 
-.util-btn {
-  background: none;
-  border: none;
-  color: #cbe0d7;
-  font-size: 11.5px;
+.mini-menu-btn {
+  background: rgba(0, 0, 0, 0.38);
+  border: 1px solid rgba(214, 169, 122, 0.25);
+  color: #d6a97a;
+  font-size: 9.5px;
   font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
   padding: 2px 6px;
-  border-radius: 4px;
+  border-radius: 99px;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
-.util-btn:hover {
-  color: #ffd54f;
-  background: rgba(255, 255, 255, 0.06);
+.mini-menu-btn:hover {
+  color: #fff;
+  border-color: #ffd54f;
 }
 
-/* ==========================================
-   5. BIG WIN / MEGA WIN / FREE SPINS OVERLAYS
-   ========================================== */
+.mini-menu-btn.install-app-btn {
+  background: linear-gradient(180deg, #b87700, #693b00);
+  border-color: #ffd54f;
+  color: #fff8d6;
+}
+
+.mini-menu-btn.install-app-btn.pwa-ready {
+  box-shadow: 0 0 8px rgba(255, 213, 79, 0.75);
+}
+
+@media (display-mode: standalone) {
+  .mini-menu-btn.install-app-btn {
+    display: none;
+  }
+}
+
+/* =========================================================
+   5. OFFICIAL PG SOFT BIG WIN / FREE SPIN / TOTAL WIN MODAL
+   ========================================================= */
 .celebration-modal {
   position: absolute;
   inset: 0;
-  z-index: 120;
-  background: rgba(15, 2, 4, 0.85);
-  backdrop-filter: blur(4px);
+  z-index: 140;
+  background: radial-gradient(circle at 50% 45%, rgba(150, 12, 22, 0.94) 0%, rgba(28, 3, 5, 0.97) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
-  padding: 20px;
+  padding: 48px 18px 36px;
   text-align: center;
+  overflow: hidden;
 }
 
 .celebration-modal.active {
   opacity: 1;
   visibility: visible;
+}
+
+.celebration-rays {
+  position: absolute;
+  top: 10%;
+  width: 580px;
+  height: 580px;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(255, 215, 0, 0.18) 0deg 12deg,
+    transparent 12deg 24deg
+  );
+  border-radius: 50%;
+  animation: fastSpinRotate 16s linear infinite;
+  pointer-events: none;
+}
+
+.celeb-pile-bg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 1;
 }
 
 #coinCanvas {
@@ -964,68 +1294,107 @@ html, body {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 .celebration-content {
   position: relative;
-  z-index: 2;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 }
 
-.win-tier-badge {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 36px;
-  font-weight: 900;
-  background: linear-gradient(180deg, #fffde7 0%, #ffd54f 45%, #ff8f00 85%, #bf360c 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 0 #3e0000) drop-shadow(0 0 25px rgba(255, 193, 7, 0.9));
-  letter-spacing: 2px;
-  animation: scaleBounce 0.6s ease-in-out infinite alternate;
+.celeb-title-sprite {
+  width: 88%;
+  max-height: 130px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.85));
+  animation: scaleBounce 0.55s ease-in-out infinite alternate;
 }
 
 @keyframes scaleBounce {
-  from { transform: scale(0.96); }
-  to { transform: scale(1.06); }
+  from { transform: scale(0.95); }
+  to { transform: scale(1.04); }
 }
 
-.win-tier-sub {
-  font-size: 14px;
+.celeb-fs-count {
+  font-size: 74px;
   font-weight: 900;
-  color: #ffe082;
-  letter-spacing: 3px;
-  margin-top: 4px;
-  text-transform: uppercase;
+  background: linear-gradient(180deg, #ffffff 0%, #fff176 40%, #ff9800 85%, #e65100 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 0 #5c040a) drop-shadow(0 0 22px rgba(255, 200, 0, 0.9));
+  line-height: 1;
+}
+
+.celeb-fs-sub {
+  width: 72%;
+  height: auto;
+  object-fit: contain;
 }
 
 .celebration-amount-box {
-  margin-top: 18px;
-  background: linear-gradient(180deg, #7f0710 0%, #3d0206 100%);
-  border: 3px solid #ffd54f;
+  background: linear-gradient(180deg, rgba(90, 5, 12, 0.92) 0%, rgba(36, 2, 5, 0.96) 100%);
+  border: 2.5px solid #ffd54f;
   border-radius: 999px;
-  padding: 12px 32px;
+  padding: 10px 28px;
   font-size: 28px;
   font-weight: 900;
-  color: #ffffff;
-  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.9), 0 0 16px #ffb300;
-  box-shadow: 0 0 30px rgba(255, 193, 7, 0.6);
+  color: #fff6a9;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.95), 0 0 14px #ffb300;
+  box-shadow: 0 0 28px rgba(255, 193, 7, 0.65);
+  margin-bottom: 16px;
 }
 
-.celebration-skip-hint {
-  margin-top: 22px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.75);
-  font-weight: 700;
+/* Official Red & Gold Ornate Button (MULAI / KUMPULKAN) */
+.celeb-ornate-btn {
+  position: relative;
+  width: 210px;
+  height: 76px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease, filter 0.15s ease;
 }
 
-/* Paytable & Rules Drawer Modal */
+.celeb-ornate-btn:hover {
+  filter: brightness(1.08);
+}
+
+.celeb-ornate-btn:active {
+  transform: scale(0.95);
+}
+
+.ornate-btn-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ornate-btn-txt {
+  position: relative;
+  z-index: 2;
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* =========================================================
+   6. DRAWER MODALS (PAYTABLE, BET, AUTO, HISTORY)
+   ========================================================= */
 .sheet-modal {
   position: absolute;
   inset: 0;
-  z-index: 150;
+  z-index: 160;
   background: rgba(0, 0, 0, 0.78);
   display: flex;
   align-items: flex-end;
@@ -1042,8 +1411,8 @@ html, body {
 .sheet-box {
   width: 100%;
   max-height: 82%;
-  background: linear-gradient(180deg, #103828 0%, #071c14 100%);
-  border-top: 3px solid #f7c548;
+  background: linear-gradient(180deg, #2b180e 0%, #140a05 100%);
+  border-top: 3px solid #f5b942;
   border-radius: 18px 18px 0 0;
   padding: 16px;
   overflow-y: auto;
@@ -1054,15 +1423,22 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(247, 197, 72, 0.3);
+  border-bottom: 1px solid rgba(245, 185, 66, 0.3);
   padding-bottom: 10px;
   margin-bottom: 12px;
 }
 
 .sheet-title {
-  font-size: 16px;
-  font-weight: 900;
+  font-size: 15px;
+  font-weight: 800;
   color: #ffd54f;
+}
+
+.sheet-desc {
+  font-size: 12px;
+  color: #d6a97a;
+  margin-bottom: 12px;
+  line-height: 1.45;
 }
 
 .sheet-close {
@@ -1076,6 +1452,54 @@ html, body {
   cursor: pointer;
 }
 
+.bet-options-grid, .auto-options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.bet-opt-btn, .auto-opt-btn {
+  background: rgba(0, 0, 0, 0.45);
+  border: 1.5px solid rgba(245, 185, 66, 0.35);
+  border-radius: 10px;
+  padding: 11px 8px;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.bet-opt-btn:hover, .auto-opt-btn:hover, .bet-opt-btn.selected {
+  background: linear-gradient(180deg, #f5b942, #a86c00);
+  color: #1f0800;
+  border-color: #fff8c4;
+}
+
+/* History List */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.history-row {
+  background: rgba(0, 0, 0, 0.42);
+  border: 1px solid rgba(245, 185, 66, 0.25);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.history-row .h-win {
+  font-weight: 800;
+  color: #ffd54f;
+}
+
+/* Paytable Grid */
 .paytable-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1083,8 +1507,8 @@ html, body {
 }
 
 .paytable-item {
-  background: rgba(0, 0, 0, 0.38);
-  border: 1px solid rgba(247, 197, 72, 0.25);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(245, 185, 66, 0.25);
   border-radius: 10px;
   padding: 8px;
   display: flex;
@@ -1093,15 +1517,16 @@ html, body {
 }
 
 .paytable-item .pt-icon {
-  width: 44px;
-  height: 56px;
+  width: 48px;
+  height: 58px;
   flex-shrink: 0;
+  position: relative;
 }
 
 .paytable-item .pt-info {
   font-size: 11px;
   line-height: 1.45;
-  color: #e0f2f1;
+  color: #e6ccb2;
 }
 
 .paytable-item .pt-info strong {
