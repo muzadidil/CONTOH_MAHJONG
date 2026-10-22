@@ -1,5 +1,5 @@
 // Official Offline-First PWA Service Worker for PG Soft Mahjong Ways
-const CACHE_NAME = 'pgsoft-mahjong-ways-v5';
+const CACHE_NAME = 'pgsoft-mahjong-ways-v6';
 
 const CORE_ASSETS = [
   './',
@@ -18,9 +18,10 @@ const CORE_ASSETS = [
   './assets/pg_native/images/atlas_57_253x141.png',
   './assets/pg_native/audio/707e06bc-e0fd-413c-8403-7ea54c9d9252.930a4.mp3',
   './assets/pg_native/audio/b83a99d7-a5a6-4774-8747-9679a8750e7a.55d20.mp3',
-  './assets/pg_native/audio/9193cc0d-d1f3-4c76-aa9d-f53fb2f51a03.75ac5.mp3',
-  './assets/pg_native/audio/519e1ff4-3fb5-40b1-b764-b5fbca4abe3d.7b3e7.mp3',
-  './assets/pg_native/audio/5c79dd63-e19c-491c-8fa1-91ecd1fd71e1.e1ae4.mp3'
+  './assets/pg_native/audio/671c5bc3-bbee-4aa1-b8dc-d32047af93f1.6dc1c.mp3',
+  './assets/pg_native/audio/35f37ba4-b805-4315-b9cd-37491e61ee25.54563.mp3',
+  './assets/pg_native/audio/aef67769-4c48-42ea-b7cc-df63b14b6d8f.7dba1.mp3',
+  './assets/pg_native/audio/23f287acf3.0427e.mp3'
 ];
 
 self.addEventListener('install', event => {
