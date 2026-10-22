@@ -1,4 +1,4 @@
-// Official Offline-First PWA Service Worker for PG Soft Mahjong Ways
+﻿// Official Offline-First PWA Service Worker for PG Soft Mahjong Ways
 const CACHE_NAME = 'pgsoft-mahjong-ways-v2';
 
 const CORE_ASSETS = [
@@ -9,6 +9,7 @@ const CORE_ASSETS = [
   './js/audio.js',
   './js/tiles.js',
   './js/game.js',
+  './js/pin.js',
   './assets/sprites/pwa_icon_192.png',
   './assets/sprites/pwa_icon_512.png',
   './assets/pg_native/images/e68edb8f51.e78d1.jpg',
@@ -80,3 +81,4 @@ self.addEventListener('fetch', event => {
     );
   }
 });
+

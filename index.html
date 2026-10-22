@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
@@ -15,6 +15,42 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <!-- ==========================================
+       0. PIN SECURITY LOCK SCREEN (PG SOFT STYLE)
+       ========================================== -->
+  <div class="pin-lock-overlay" id="pinLockOverlay">
+    <div class="pin-card" id="pinCard">
+      <div class="pin-icon-badge">🔒</div>
+      <div class="pin-title">KODE KEAMANAN</div>
+      <div class="pin-subtitle">Masukkan PIN 4 digit untuk mengakses game</div>
+
+      <div class="pin-dots-container">
+        <div class="pin-dot" id="dot0"></div>
+        <div class="pin-dot" id="dot1"></div>
+        <div class="pin-dot" id="dot2"></div>
+        <div class="pin-dot" id="dot3"></div>
+      </div>
+
+      <div class="pin-error-msg" id="pinErrorMsg">PIN Salah! Silakan coba lagi.</div>
+
+      <div class="pin-keypad">
+        <button type="button" class="pin-btn" data-val="1">1</button>
+        <button type="button" class="pin-btn" data-val="2">2</button>
+        <button type="button" class="pin-btn" data-val="3">3</button>
+        <button type="button" class="pin-btn" data-val="4">4</button>
+        <button type="button" class="pin-btn" data-val="5">5</button>
+        <button type="button" class="pin-btn" data-val="6">6</button>
+        <button type="button" class="pin-btn" data-val="7">7</button>
+        <button type="button" class="pin-btn" data-val="8">8</button>
+        <button type="button" class="pin-btn" data-val="9">9</button>
+        <button type="button" class="pin-btn action-btn" id="pinClearBtn">C</button>
+        <button type="button" class="pin-btn" data-val="0">0</button>
+        <button type="button" class="pin-btn action-btn" id="pinBackBtn">⌫</button>
+      </div>
+
+      <div class="pin-hint">PIN Akses: <strong style="color:#ffd54f;">8888</strong></div>
+    </div>
+  </div>
   <div class="app-backdrop">
     <!-- PG Soft 9:16 Portrait Game Shell -->
     <main class="game-shell" id="gameShell">
@@ -43,12 +79,12 @@
           <div class="splash-cert-row">
             <div class="pg-pixel-logo">
               <div class="pg-pixel-text">PG</div>
-              <div class="pg-pixel-sub">POCKET GAMES SOFT<sup>®</sup></div>
+              <div class="pg-pixel-sub">POCKET GAMES SOFT<sup>Â®</sup></div>
             </div>
             <img class="splash-cert-img" src="assets/pg_native/images/atlas_0_732x108.png" alt="MGA BMM" draggable="false" />
           </div>
           <div class="splash-copyright">
-            PGSOFT.COM 2026 © PG SOFT<sup>®</sup> HAK CIPTA DILINDUNGI UNDANG-UNDANG
+            PGSOFT.COM 2026 Â© PG SOFT<sup>Â®</sup> HAK CIPTA DILINDUNGI UNDANG-UNDANG
           </div>
         </div>
       </div>
@@ -94,14 +130,14 @@
 
         <!-- Top-Right Golden Trophy / Demo Trigger Button (Matches after_mulai_1.png) -->
         <button type="button" class="hdr-trophy-btn" id="demoMenuBtn" title="Menu Fitur Demo (Scatter / Big Win)">
-          <span class="trophy-icon">🏆</span>
+          <span class="trophy-icon">ðŸ†</span>
           <span class="trophy-dot"></span>
         </button>
 
         <!-- Quick Demo Popup Menu when clicking Trophy -->
         <div class="demo-popup-menu hidden" id="demoPopupMenu">
-          <button type="button" class="demo-popup-item" id="demoScatterBtn">🀄 Picu 3 Scatter (Putaran Gratis)</button>
-          <button type="button" class="demo-popup-item" id="demoBigWinBtn">🐉 Picu Kombo Emas &amp; Menang Besar</button>
+          <button type="button" class="demo-popup-item" id="demoScatterBtn">ðŸ€„ Picu 3 Scatter (Putaran Gratis)</button>
+          <button type="button" class="demo-popup-item" id="demoBigWinBtn">ðŸ‰ Picu Kombo Emas &amp; Menang Besar</button>
         </div>
       </header>
 
@@ -226,10 +262,10 @@
 
         <!-- Subtle PG Soft Bottom Menu Bar (Sound, Paytable, History, Install App) -->
         <div class="pg-mini-menu-row">
-          <button type="button" class="mini-menu-btn" id="soundToggleBtn">🔊 Suara: ON</button>
-          <button type="button" class="mini-menu-btn" id="paytableBtn">📜 Tabel Pembayaran</button>
-          <button type="button" class="mini-menu-btn" id="historyBtn">🕒 Riwayat</button>
-          <button type="button" class="mini-menu-btn install-app-btn" id="installPwaBtn">📲 Install Aplikasi</button>
+          <button type="button" class="mini-menu-btn" id="soundToggleBtn">ðŸ”Š Suara: ON</button>
+          <button type="button" class="mini-menu-btn" id="paytableBtn">ðŸ“œ Tabel Pembayaran</button>
+          <button type="button" class="mini-menu-btn" id="historyBtn">ðŸ•’ Riwayat</button>
+          <button type="button" class="mini-menu-btn install-app-btn" id="installPwaBtn">ðŸ“² Install Aplikasi</button>
         </div>
       </footer>
 
@@ -270,9 +306,9 @@
         <div class="sheet-box">
           <div class="sheet-header">
             <div class="sheet-title">Pengaturan Taruhan</div>
-            <button type="button" class="sheet-close" id="closeBetSheetBtn">✕</button>
+            <button type="button" class="sheet-close" id="closeBetSheetBtn">âœ•</button>
           </div>
-          <p class="sheet-desc">Pilih jumlah taruhan per putaran (20 Taruhan Dasar • 1.024 Cara):</p>
+          <p class="sheet-desc">Pilih jumlah taruhan per putaran (20 Taruhan Dasar â€¢ 1.024 Cara):</p>
           <div class="bet-options-grid" id="betOptionsGrid"></div>
         </div>
       </div>
@@ -284,7 +320,7 @@
         <div class="sheet-box">
           <div class="sheet-header">
             <div class="sheet-title">Putar Otomatis</div>
-            <button type="button" class="sheet-close" id="closeAutoSheetBtn">✕</button>
+            <button type="button" class="sheet-close" id="closeAutoSheetBtn">âœ•</button>
           </div>
           <p class="sheet-desc">Jumlah Putaran Otomatis:</p>
           <div class="auto-options-grid">
@@ -293,7 +329,7 @@
             <button type="button" class="auto-opt-btn" data-spins="50">50</button>
             <button type="button" class="auto-opt-btn" data-spins="80">80</button>
             <button type="button" class="auto-opt-btn" data-spins="100">100</button>
-            <button type="button" class="auto-opt-btn" data-spins="999">∞</button>
+            <button type="button" class="auto-opt-btn" data-spins="999">âˆž</button>
           </div>
         </div>
       </div>
@@ -305,7 +341,7 @@
         <div class="sheet-box">
           <div class="sheet-header">
             <div class="sheet-title">Riwayat Permainan</div>
-            <button type="button" class="sheet-close" id="closeHistoryBtn">✕</button>
+            <button type="button" class="sheet-close" id="closeHistoryBtn">âœ•</button>
           </div>
           <div class="history-list" id="historyList"></div>
         </div>
@@ -317,12 +353,12 @@
       <div class="sheet-modal" id="paytableModal">
         <div class="sheet-box">
           <div class="sheet-header">
-            <div class="sheet-title">Tabel Pembayaran — Mahjong Ways</div>
-            <button type="button" class="sheet-close" id="closePaytableBtn">✕</button>
+            <div class="sheet-title">Tabel Pembayaran â€” Mahjong Ways</div>
+            <button type="button" class="sheet-close" id="closePaytableBtn">âœ•</button>
           </div>
           <p class="sheet-desc">
-            • <strong>Simbol Berlapis Emas</strong>: Pada gulungan 2, 3, dan 4, simbol berlapis emas yang terlibat dalam kemenangan akan berubah menjadi <strong>Simbol Wild (Ingot Emas)</strong>.<br />
-            • <strong>Pengali Kemenangan</strong>: Setiap runtuhan meningkatkan pengali dari <strong>x1 → x2 → x3 → x5</strong> (dan <strong>x2 → x4 → x6 → x10</strong> dalam Putaran Gratis).
+            â€¢ <strong>Simbol Berlapis Emas</strong>: Pada gulungan 2, 3, dan 4, simbol berlapis emas yang terlibat dalam kemenangan akan berubah menjadi <strong>Simbol Wild (Ingot Emas)</strong>.<br />
+            â€¢ <strong>Pengali Kemenangan</strong>: Setiap runtuhan meningkatkan pengali dari <strong>x1 â†’ x2 â†’ x3 â†’ x5</strong> (dan <strong>x2 â†’ x4 â†’ x6 â†’ x10</strong> dalam Putaran Gratis).
           </p>
           <div class="paytable-grid" id="paytableGrid"></div>
         </div>
@@ -334,23 +370,23 @@
       <div class="sheet-modal" id="installGuideModal">
         <div class="sheet-box">
           <div class="sheet-header">
-            <div class="sheet-title">📲 Install Aplikasi Mahjong Ways</div>
-            <button type="button" class="sheet-close" id="closeInstallGuideBtn">✕</button>
+            <div class="sheet-title">ðŸ“² Install Aplikasi Mahjong Ways</div>
+            <button type="button" class="sheet-close" id="closeInstallGuideBtn">âœ•</button>
           </div>
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;background:rgba(0,0,0,0.35);padding:10px;border-radius:10px;border:1px solid rgba(255,213,79,0.3);">
             <img src="assets/sprites/pwa_icon_192.png" alt="Icon" style="width:54px;height:54px;border-radius:12px;border:1.5px solid #ffd54f;" />
             <div>
-              <div style="font-size:14px;font-weight:800;color:#ffe082;">PG Soft — Mahjong Ways</div>
+              <div style="font-size:14px;font-weight:800;color:#ffe082;">PG Soft â€” Mahjong Ways</div>
               <div style="font-size:11px;color:#d6a97a;">Aplikasi Layar Penuh (PWA / Offline Ready)</div>
             </div>
           </div>
           <p class="sheet-desc" style="line-height:1.55;font-size:12px;">
             <strong>1. Install Langsung di Android (Chrome):</strong><br />
-            • Klik menu titik tiga <strong>(⋮)</strong> di pojok kanan atas Chrome, lalu pilih <strong>"Tambahkan ke Layar Utama" (Add to Home Screen / Install App)</strong>.<br /><br />
+            â€¢ Klik menu titik tiga <strong>(â‹®)</strong> di pojok kanan atas Chrome, lalu pilih <strong>"Tambahkan ke Layar Utama" (Add to Home Screen / Install App)</strong>.<br /><br />
             <strong>2. Install di PC / Laptop (Chrome / Edge):</strong><br />
-            • Klik ikon <strong>Install (+) / Komputer</strong> di sebelah kanan kolom URL address bar atas.<br /><br />
+            â€¢ Klik ikon <strong>Install (+) / Komputer</strong> di sebelah kanan kolom URL address bar atas.<br /><br />
             <strong>3. Buka dari HP dalam Satu Wi-Fi:</strong><br />
-            • Pastikan HP dan Laptop terhubung ke Wi-Fi/Hotspot yang sama, lalu buka alamat IP lokal komputer Anda di Chrome HP.
+            â€¢ Pastikan HP dan Laptop terhubung ke Wi-Fi/Hotspot yang sama, lalu buka alamat IP lokal komputer Anda di Chrome HP.
           </p>
         </div>
       </div>
@@ -361,5 +397,7 @@
   <script src="js/audio.js"></script>
   <script src="js/tiles.js"></script>
   <script src="js/game.js"></script>
+  <script src="js/pin.js"></script>
 </body>
 </html>
+
