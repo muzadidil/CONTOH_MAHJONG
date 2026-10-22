@@ -1,4 +1,4 @@
-/* Authentic PG Soft Mahjong Ways (1) Official Styling & Layout */
+﻿/* Authentic PG Soft Mahjong Ways (1) Official Styling & Layout */
 /* Uses 100% genuine extracted PG Soft textures and sprite sheets */
 
 * {
@@ -100,7 +100,7 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 62px;
+  margin-bottom: 24px;
 }
 
 /* Red Progress Bar State (screen_6s.png) */
@@ -169,22 +169,24 @@ html, body {
 
 /* Glossy Red MULAI Button (game_25s.png) */
 .pg-mulai-btn {
-  width: 162px;
-  height: 44px;
+  position: relative;
+  top: 36px;
+  width: 168px;
+  height: 46px;
   border-radius: 8px;
   border: 1.5px solid rgba(255, 190, 190, 0.75);
   background: linear-gradient(180deg, #ff7a82 0%, #f02c37 48%, #d61b26 100%);
   color: #ffffff;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
   letter-spacing: 0.5px;
   cursor: pointer;
   box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.65),
+    0 4px 14px rgba(0, 0, 0, 0.75),
     inset 0 1.5px 1px rgba(255, 255, 255, 0.6);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
   transition: transform 0.1s ease, filter 0.15s ease;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 
 .pg-mulai-btn:hover {
@@ -1705,3 +1707,4 @@ html, body {
   animation: pinShake 0.4s ease-in-out;
   border-color: #ff5252 !important;
 }
+
