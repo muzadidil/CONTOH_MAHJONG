@@ -685,6 +685,16 @@ html, body {
   animation: pgCascadeGravity var(--drop-dur, 0.42s) cubic-bezier(0.32, 0, 0.67, 0) var(--drop-delay, 0ms) both;
 }
 
+/* Top peek: the box stays put as a clipping window and the tile inside falls, so the next tile in the
+   queue travels in step with the tiles below it instead of sliding in on its own. */
+.tile-cell.peek-top.cascade-shift {
+  animation: none;
+}
+
+.tile-cell.peek-top.cascade-shift .pg-tile {
+  animation: pgCascadeGravity var(--drop-dur, 0.42s) cubic-bezier(0.32, 0, 0.67, 0) var(--drop-delay, 0ms) both;
+}
+
 @keyframes pgCascadeGravity {
   0% {
     transform: translateY(calc(var(--drop-rows, 1) * -100%));

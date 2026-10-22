@@ -9,6 +9,11 @@
   const FREE_MULTIPLIERS = [2, 4, 6, 10];
   const BET_OPTIONS = [400, 800, 1200, 2000, 4000, 10000, 20000, 50000, 100000];
 
+  // Cascade fall distances are measured in tile heights (translateY % of the tile's own height).
+  // Neighbouring .tile-cell boxes overlap by 3% of the column width (margin -1.5% top and bottom) at a
+  // 162:190 tile ratio, so one row of travel is a bit less than one tile height.
+  const ROW_PITCH = 1 - (0.03 * 162) / 190;
+
   // Official PG Soft Marquee Info Sprites (info0.png .. info5.png)
   const INFO_SPRITES = [
     'assets/sprites/info0.png',
@@ -149,7 +154,8 @@
     const newBottomPeek = [];
 
     for (let c = 0; c < COLS; c++) {
-      newTopPeek.push(createRandomCell(c, false));
+      // The top peek is the next tile to fall into the column, so it may be a scatter like any other tile.
+      newTopPeek.push(createRandomCell(c, true));
       newBottomPeek.push(createRandomCell(c, false));
       const colArr = [];
       for (let r = 0; r < PLAYABLE_ROWS; r++) {
@@ -746,19 +752,27 @@
 
         const missingCount = PLAYABLE_ROWS - survivingWithFall.length;
         if (missingCount > 0) {
+          // The column is a queue: the tile peeking above the board (state.topPeek) is next in line, so it
+          // is the one that lands lowest. Tiles queued behind it have never been on screen, so they can be
+          // drawn now. The whole new block falls together, and the tile behind the block becomes the new peek.
+          const newTileFall = missingCount * ROW_PITCH;
           const newTopWithFall = [];
-          for (let i = 0; i < missingCount; i++) {
+          for (let i = 0; i < missingCount - 1; i++) {
             newTopWithFall.push({
               cell: createRandomCell(c, true),
-              fallRows: missingCount + 0.35
+              fallRows: newTileFall
             });
           }
+          newTopWithFall.push({
+            cell: state.topPeek[c],
+            fallRows: newTileFall
+          });
           const combined = [...newTopWithFall, ...survivingWithFall];
           state.grid[c] = combined.map(item => item.cell);
-          state.topPeek[c] = createRandomCell(c, false);
+          state.topPeek[c] = createRandomCell(c, true);
 
           const dropDistances = combined.map(item => item.fallRows);
-          dropDistances.topPeek = missingCount;
+          dropDistances.topPeek = newTileFall;
           const rtlIdx = affectedColsRightToLeft.indexOf(c);
           const delayMs = state.isTurbo ? 0 : Math.max(0, rtlIdx) * 75;
           colDropPlans[c] = { changed: true, dropDistances, delayMs };
