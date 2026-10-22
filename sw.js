@@ -1,5 +1,5 @@
 // Official Offline-First PWA Service Worker for PG Soft Mahjong Ways
-const CACHE_NAME = 'pgsoft-mahjong-ways-v3';
+const CACHE_NAME = 'pgsoft-mahjong-ways-v4';
 
 const CORE_ASSETS = [
   './',

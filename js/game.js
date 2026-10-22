@@ -1316,7 +1316,13 @@
     // Sound Toggle
     els.soundToggleBtn.addEventListener('click', () => {
       const on = window.MahjongSound.toggleMute();
-      els.soundToggleBtn.textContent = on ? '🔊 Suara: ON' : '🔇 Suara: OFF';
+      const soundIc = document.getElementById('soundIc');
+      if (soundIc) {
+        soundIc.textContent = on ? '🔊' : '🔇';
+      } else {
+        els.soundToggleBtn.textContent = on ? '🔊 Suara' : '🔇 Mute';
+      }
+      els.soundToggleBtn.classList.toggle('muted', !on);
     });
 
     // PWA Service Worker & Install Prompt Registration

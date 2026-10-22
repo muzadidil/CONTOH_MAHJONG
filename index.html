@@ -12,7 +12,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="assets/sprites/pwa_icon_192.png" />
   <link rel="apple-touch-icon" href="assets/sprites/pwa_icon_192.png" />
   <title>Mahjong Ways</title>
-  <link rel="stylesheet" href="css/style.css?v=1.2" />
+  <link rel="stylesheet" href="css/style.css?v=1.3" />
 </head>
 <body>
   <!-- ==========================================
@@ -130,14 +130,14 @@
 
         <!-- Top-Right Golden Trophy / Demo Trigger Button (Matches after_mulai_1.png) -->
         <button type="button" class="hdr-trophy-btn" id="demoMenuBtn" title="Menu Fitur Demo (Scatter / Big Win)">
-          <span class="trophy-icon">ðŸ†</span>
+          <span class="trophy-icon">🏆</span>
           <span class="trophy-dot"></span>
         </button>
 
         <!-- Quick Demo Popup Menu when clicking Trophy -->
         <div class="demo-popup-menu hidden" id="demoPopupMenu">
-          <button type="button" class="demo-popup-item" id="demoScatterBtn">ðŸ€„ Picu 3 Scatter (Putaran Gratis)</button>
-          <button type="button" class="demo-popup-item" id="demoBigWinBtn">ðŸ‰ Picu Kombo Emas &amp; Menang Besar</button>
+          <button type="button" class="demo-popup-item" id="demoScatterBtn">🀄 Picu 3 Scatter (Putaran Gratis)</button>
+          <button type="button" class="demo-popup-item" id="demoBigWinBtn">🐉 Picu Kombo Emas &amp; Menang Besar</button>
         </div>
       </header>
 
@@ -262,10 +262,10 @@
 
         <!-- Subtle PG Soft Bottom Menu Bar (Sound, Paytable, History, Install App) -->
         <div class="pg-mini-menu-row">
-          <button type="button" class="mini-menu-btn" id="soundToggleBtn">ðŸ”Š Suara: ON</button>
-          <button type="button" class="mini-menu-btn" id="paytableBtn">ðŸ“œ Tabel Pembayaran</button>
-          <button type="button" class="mini-menu-btn" id="historyBtn">ðŸ•’ Riwayat</button>
-          <button type="button" class="mini-menu-btn install-app-btn" id="installPwaBtn">ðŸ“² Install Aplikasi</button>
+          <button type="button" class="mini-menu-btn" id="soundToggleBtn"><span class="btn-ic" id="soundIc">🔊</span><span class="btn-lbl" id="soundLbl">Suara</span></button>
+          <button type="button" class="mini-menu-btn" id="paytableBtn"><span class="btn-ic">📜</span><span class="btn-lbl">Bayaran</span></button>
+          <button type="button" class="mini-menu-btn" id="historyBtn"><span class="btn-ic">🕒</span><span class="btn-lbl">Riwayat</span></button>
+          <button type="button" class="mini-menu-btn install-app-btn" id="installPwaBtn"><span class="btn-ic">📲</span><span class="btn-lbl">Install</span></button>
         </div>
       </footer>
 
@@ -306,9 +306,9 @@
         <div class="sheet-box">
           <div class="sheet-header">
             <div class="sheet-title">Pengaturan Taruhan</div>
-            <button type="button" class="sheet-close" id="closeBetSheetBtn">âœ•</button>
+            <button type="button" class="sheet-close" id="closeBetSheetBtn">✕</button>
           </div>
-          <p class="sheet-desc">Pilih jumlah taruhan per putaran (20 Taruhan Dasar â€¢ 1.024 Cara):</p>
+          <p class="sheet-desc">Pilih jumlah taruhan per putaran (20 Taruhan Dasar • 1.024 Cara):</p>
           <div class="bet-options-grid" id="betOptionsGrid"></div>
         </div>
       </div>
@@ -320,7 +320,7 @@
         <div class="sheet-box">
           <div class="sheet-header">
             <div class="sheet-title">Putar Otomatis</div>
-            <button type="button" class="sheet-close" id="closeAutoSheetBtn">âœ•</button>
+            <button type="button" class="sheet-close" id="closeAutoSheetBtn">✕</button>
           </div>
           <p class="sheet-desc">Jumlah Putaran Otomatis:</p>
           <div class="auto-options-grid">
@@ -329,7 +329,7 @@
             <button type="button" class="auto-opt-btn" data-spins="50">50</button>
             <button type="button" class="auto-opt-btn" data-spins="80">80</button>
             <button type="button" class="auto-opt-btn" data-spins="100">100</button>
-            <button type="button" class="auto-opt-btn" data-spins="999">âˆž</button>
+            <button type="button" class="auto-opt-btn" data-spins="999">∞</button>
           </div>
         </div>
       </div>
@@ -341,7 +341,7 @@
         <div class="sheet-box">
           <div class="sheet-header">
             <div class="sheet-title">Riwayat Permainan</div>
-            <button type="button" class="sheet-close" id="closeHistoryBtn">âœ•</button>
+            <button type="button" class="sheet-close" id="closeHistoryBtn">✕</button>
           </div>
           <div class="history-list" id="historyList"></div>
         </div>
@@ -353,12 +353,12 @@
       <div class="sheet-modal" id="paytableModal">
         <div class="sheet-box">
           <div class="sheet-header">
-            <div class="sheet-title">Tabel Pembayaran â€” Mahjong Ways</div>
-            <button type="button" class="sheet-close" id="closePaytableBtn">âœ•</button>
+            <div class="sheet-title">Tabel Pembayaran — Mahjong Ways</div>
+            <button type="button" class="sheet-close" id="closePaytableBtn">✕</button>
           </div>
           <p class="sheet-desc">
-            â€¢ <strong>Simbol Berlapis Emas</strong>: Pada gulungan 2, 3, dan 4, simbol berlapis emas yang terlibat dalam kemenangan akan berubah menjadi <strong>Simbol Wild (Ingot Emas)</strong>.<br />
-            â€¢ <strong>Pengali Kemenangan</strong>: Setiap runtuhan meningkatkan pengali dari <strong>x1 â†’ x2 â†’ x3 â†’ x5</strong> (dan <strong>x2 â†’ x4 â†’ x6 â†’ x10</strong> dalam Putaran Gratis).
+            • <strong>Simbol Berlapis Emas</strong>: Pada gulungan 2, 3, dan 4, simbol berlapis emas yang terlibat dalam kemenangan akan berubah menjadi <strong>Simbol Wild (Ingot Emas)</strong>.<br />
+            • <strong>Pengali Kemenangan</strong>: Setiap runtuhan meningkatkan pengali dari <strong>x1 → x2 → x3 → x5</strong> (dan <strong>x2 → x4 → x6 → x10</strong> dalam Putaran Gratis).
           </p>
           <div class="paytable-grid" id="paytableGrid"></div>
         </div>
@@ -370,23 +370,23 @@
       <div class="sheet-modal" id="installGuideModal">
         <div class="sheet-box">
           <div class="sheet-header">
-            <div class="sheet-title">ðŸ“² Install Aplikasi Mahjong Ways</div>
-            <button type="button" class="sheet-close" id="closeInstallGuideBtn">âœ•</button>
+            <div class="sheet-title"><span class="btn-ic">📲</span><span class="btn-lbl">Install</span> Mahjong Ways</div>
+            <button type="button" class="sheet-close" id="closeInstallGuideBtn">✕</button>
           </div>
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;background:rgba(0,0,0,0.35);padding:10px;border-radius:10px;border:1px solid rgba(255,213,79,0.3);">
             <img src="assets/sprites/pwa_icon_192.png" alt="Icon" style="width:54px;height:54px;border-radius:12px;border:1.5px solid #ffd54f;" />
             <div>
-              <div style="font-size:14px;font-weight:800;color:#ffe082;">PG Soft â€” Mahjong Ways</div>
+              <div style="font-size:14px;font-weight:800;color:#ffe082;">PG Soft — Mahjong Ways</div>
               <div style="font-size:11px;color:#d6a97a;">Aplikasi Layar Penuh (PWA / Offline Ready)</div>
             </div>
           </div>
           <p class="sheet-desc" style="line-height:1.55;font-size:12px;">
             <strong>1. Install Langsung di Android (Chrome):</strong><br />
-            â€¢ Klik menu titik tiga <strong>(â‹®)</strong> di pojok kanan atas Chrome, lalu pilih <strong>"Tambahkan ke Layar Utama" (Add to Home Screen / Install App)</strong>.<br /><br />
+            • Klik menu titik tiga <strong>(⋮)</strong> di pojok kanan atas Chrome, lalu pilih <strong>"Tambahkan ke Layar Utama" (Add to Home Screen / Install App)</strong>.<br /><br />
             <strong>2. Install di PC / Laptop (Chrome / Edge):</strong><br />
-            â€¢ Klik ikon <strong>Install (+) / Komputer</strong> di sebelah kanan kolom URL address bar atas.<br /><br />
+            • Klik ikon <strong>Install (+) / Komputer</strong> di sebelah kanan kolom URL address bar atas.<br /><br />
             <strong>3. Buka dari HP dalam Satu Wi-Fi:</strong><br />
-            â€¢ Pastikan HP dan Laptop terhubung ke Wi-Fi/Hotspot yang sama, lalu buka alamat IP lokal komputer Anda di Chrome HP.
+            • Pastikan HP dan Laptop terhubung ke Wi-Fi/Hotspot yang sama, lalu buka alamat IP lokal komputer Anda di Chrome HP.
           </p>
         </div>
       </div>
