@@ -1,5 +1,5 @@
 // Official Offline-First PWA Service Worker for PG Soft Mahjong Ways
-const CACHE_NAME = 'pgsoft-mahjong-ways-v8';
+const CACHE_NAME = 'pgsoft-mahjong-ways-v9';
 
 // Semua sprite di assets/sprites/. Tambahkan nama file baru di sini bila ada sprite baru.
 const SPRITES = [

@@ -792,11 +792,14 @@
       // Authentic PG Soft ShiftSlotHandler & MJResultState:
       // Play symbolCollapse impact sound and step up Multiplier + Mandarin voice when cascading tiles hit the bottom!
       state.cascadeIndex++;
+      // The multiplier tops out on the last ladder step; past that nothing steps up, so no step-up sound either
+      const stepUpIndex = state.cascadeIndex;
+      const multiplierStepped = stepUpIndex < mults.length;
       const collapseImpactMs = state.isTurbo ? 120 : 240;
       setTimeout(() => {
         window.MahjongSound.playTileCollapseImpact();
         updateMultiplierUI();
-        window.MahjongSound.playMultiplierUp(state.cascadeIndex);
+        if (multiplierStepped) window.MahjongSound.playMultiplierUp(stepUpIndex);
       }, collapseImpactMs);
 
       // Wait for cascading tiles to finish landing + PG Soft 0.3s settle delay before checking next cascade
@@ -938,6 +941,7 @@
         closed = true;
         clearInterval(rollTimer);
         els.celebAmount.textContent = formatIDR(targetAmount);
+        window.MahjongSound.stopBigWin();
         window.MahjongSound.playCollect();
         els.celebModal.classList.remove('active');
         stopCoinShower();

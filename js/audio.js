@@ -84,6 +84,26 @@
     walletCountingAbove: { from: 4.0, to: 4.55 }
   };
 
+  // One-shot cues that share a channel: a new cue fades out the one still ringing in the same group,
+  // so long tails (win chimes, multiplier stingers, big-win music) never pile up on top of each other.
+  // Any cue not listed here is its own group (retriggering it cuts its previous instance).
+  const CUE_GROUPS = {
+    prizeSmallwin:           'win',
+    prizeMedwin:             'win',
+    infoboardTotalwin:       'win',
+    multiplierA:             'multiplier',
+    multiplierB:             'multiplier',
+    multiplierC:             'multiplier',
+    multiplierUpUpUp:        'multiplier',
+    bgmBigwin:               'bigwin',
+    bgmBigwinEnd:            'bigwin',
+    fastspinStart:           'anticipation',
+    fastspinEnd:             'anticipation'
+  };
+
+  // Rhythmic ticks that are already rate-limited and are meant to overlap
+  const NO_CHOKE_CUES = new Set(['walletCountingAbove']);
+
   class MahjongAudio {
     constructor() {
       this.ctx = null;
@@ -103,6 +123,7 @@
       this.activeBgmSource = null;
       this.activeBgmGain = null;
       this.activeLoopSources = {};
+      this.activeShots = {};
       this.activeVoxSource = null;
       this.activeVoxGain = null;
 
@@ -192,6 +213,12 @@
       const sprite = spriteMap[cueName];
       if (!buf || !sprite || !this.ctx) return null;
 
+      // Cut the previous instance of this cue (or its group) before the new one starts
+      const shotKey = (loop || NO_CHOKE_CUES.has(cueName))
+        ? null
+        : (CUE_GROUPS[cueName] || bankKey + ':' + cueName);
+      if (shotKey) this.stopGroup(shotKey, 0.04);
+
       try {
         const src = this.ctx.createBufferSource();
         src.buffer = buf;
@@ -219,11 +246,48 @@
           gainNode.gain.setValueAtTime(volume, now + duration - 0.015);
           gainNode.gain.linearRampToValueAtTime(0.001, now + duration);
           src.start(0, sprite.from, duration);
+
+          if (shotKey) {
+            const shot = { src, gain: gainNode };
+            this.activeShots[shotKey] = shot;
+            src.onended = () => {
+              if (this.activeShots[shotKey] === shot) delete this.activeShots[shotKey];
+            };
+          }
         }
         return src;
       } catch (e) {
         return null;
       }
+    }
+
+    // Fade a one-shot out and schedule its stop on the audio clock (no pop, no setTimeout drift)
+    _fadeOutShot(shot, fadeSec) {
+      if (!shot || !this.ctx) return;
+      try {
+        const now = this.ctx.currentTime;
+        const param = shot.gain.gain;
+        const current = param.value;
+        param.cancelScheduledValues(now);
+        param.setValueAtTime(current, now);
+        param.linearRampToValueAtTime(0.001, now + fadeSec);
+        shot.src.stop(now + fadeSec + 0.01);
+      } catch (e) {
+        try { shot.src.stop(); } catch (e2) {}
+      }
+    }
+
+    // Fade out whatever one-shot is still ringing in this group
+    stopGroup(groupKey, fadeSec = 0.04) {
+      const shot = this.activeShots[groupKey];
+      if (!shot) return;
+      delete this.activeShots[groupKey];
+      this._fadeOutShot(shot, fadeSec);
+    }
+
+    // Big-win music is a 20s sprite played as a one-shot: it must end with the celebration, not outlive it
+    stopBigWin(fadeSec = 0.35) {
+      this.stopGroup('bigwin', fadeSec);
     }
 
     // Stop looping sound cleanly without popping/clicking
@@ -403,6 +467,8 @@
     }
 
     playSpinStart() {
+      // A new spin starts with clean win layers: nothing from the previous spin may ring into it
+      ['win', 'multiplier', 'bigwin', 'anticipation'].forEach(group => this.stopGroup(group, 0.12));
       this.playGeneral('spinBtn', 0.85);
       this.stopLoopSprite('reelLoop');
       this.playGeneral('reelLoop', 0.38, true);
@@ -435,6 +501,7 @@
       this.playGeneral('fastspinStart', 0.85);
     }
 
+    // fastspinEnd shares the 'anticipation' group with fastspinStart (5.6s), so playing it cuts the pulse off
     stopAnticipationPulse() {
       this.playGeneral('fastspinEnd', 0.85);
     }
